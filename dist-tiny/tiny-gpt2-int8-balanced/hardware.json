@@ -1,0 +1,34 @@
+{
+  "platform": "linux",
+  "cpu_model": "Intel(R) Xeon(R) Processor @ 2.50GHz",
+  "cpu_freq_mhz": 2499.998,
+  "physical_cores": 2,
+  "logical_cores": 2,
+  "threads_per_core": 1,
+  "numa_nodes": 1,
+  "ram_gb": 8.35,
+  "simd": "sse sse2 sse4.1 sse4.2 fma f16c avx avx2 avx512f avx512bw",
+  "caches": [
+    {
+      "level": 1,
+      "size": "32K",
+      "type": "Data"
+    },
+    {
+      "level": 1,
+      "size": "32K",
+      "type": "Instruction"
+    },
+    {
+      "level": 2,
+      "size": "1024K",
+      "type": "Unified"
+    },
+    {
+      "level": 3,
+      "size": "33792K",
+      "type": "Unified"
+    }
+  ],
+  "memory_bandwidth_gbps": 5.93
+}

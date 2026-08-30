@@ -1,0 +1,449 @@
+{
+  "hardware": {
+    "cpu_model": "Intel(R) Xeon(R) Processor @ 2.50GHz",
+    "physical_cores": 2,
+    "logical_cores": 2,
+    "ram_gb": 8.35,
+    "simd": "sse sse2 sse4.1 sse4.2 fma f16c avx avx2 avx512f avx512bw"
+  },
+  "bench_config": {
+    "prompt_len_tokens": 27,
+    "prompt": "The rapid adoption of small language models has created a need for efficient deployment on diverse computing environments such as commodity CPUs, on-premise servers and edge devices.",
+    "n_tokens": 16,
+    "warmup": 1,
+    "iters": 3
+  },
+  "grid_size": 16,
+  "measurements": [
+    {
+      "model": "models/gpt2-int8-per.ecm",
+      "precision": "int8",
+      "threads": 1,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 24.357,
+      "ttft_avg_ms": 518.347,
+      "p50_ms": 23.985,
+      "p95_ms": 27.665,
+      "p99_ms": 28.667,
+      "tokens_per_sec": 41.057,
+      "peak_rss_gb": 0.2,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-int8-per.ecm",
+      "precision": "int8",
+      "threads": 1,
+      "batch": 1,
+      "affinity": "physical",
+      "avg_token_ms": 23.665,
+      "ttft_avg_ms": 496.517,
+      "p50_ms": 23.68,
+      "p95_ms": 24.249,
+      "p99_ms": 25.918,
+      "tokens_per_sec": 42.256,
+      "peak_rss_gb": 0.2,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-int8-per.ecm",
+      "precision": "int8",
+      "threads": 1,
+      "batch": 2,
+      "affinity": "none",
+      "avg_token_ms": 38.628,
+      "ttft_avg_ms": 496.099,
+      "p50_ms": 38.235,
+      "p95_ms": 40.642,
+      "p99_ms": 42.744,
+      "tokens_per_sec": 25.888,
+      "peak_rss_gb": 0.235,
+      "n_generated_tokens": 32,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-int8-per.ecm",
+      "precision": "int8",
+      "threads": 1,
+      "batch": 2,
+      "affinity": "physical",
+      "avg_token_ms": 40.774,
+      "ttft_avg_ms": 501.648,
+      "p50_ms": 37.791,
+      "p95_ms": 39.681,
+      "p99_ms": 169.743,
+      "tokens_per_sec": 24.525,
+      "peak_rss_gb": 0.235,
+      "n_generated_tokens": 32,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-int8-per.ecm",
+      "precision": "int8",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 14.206,
+      "ttft_avg_ms": 309.124,
+      "p50_ms": 13.908,
+      "p95_ms": 15.964,
+      "p99_ms": 22.637,
+      "tokens_per_sec": 70.393,
+      "peak_rss_gb": 0.2,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-int8-per.ecm",
+      "precision": "int8",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "physical",
+      "avg_token_ms": 13.821,
+      "ttft_avg_ms": 309.535,
+      "p50_ms": 13.813,
+      "p95_ms": 14.251,
+      "p99_ms": 14.287,
+      "tokens_per_sec": 72.352,
+      "peak_rss_gb": 0.2,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-int8-per.ecm",
+      "precision": "int8",
+      "threads": 2,
+      "batch": 2,
+      "affinity": "none",
+      "avg_token_ms": 24.678,
+      "ttft_avg_ms": 310.228,
+      "p50_ms": 23.689,
+      "p95_ms": 34.088,
+      "p99_ms": 43.712,
+      "tokens_per_sec": 40.522,
+      "peak_rss_gb": 0.235,
+      "n_generated_tokens": 32,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-int8-per.ecm",
+      "precision": "int8",
+      "threads": 2,
+      "batch": 2,
+      "affinity": "physical",
+      "avg_token_ms": 24.188,
+      "ttft_avg_ms": 313.546,
+      "p50_ms": 23.379,
+      "p95_ms": 30.64,
+      "p99_ms": 36.148,
+      "tokens_per_sec": 41.343,
+      "peak_rss_gb": 0.235,
+      "n_generated_tokens": 32,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 1,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 33.484,
+      "ttft_avg_ms": 757.346,
+      "p50_ms": 33.403,
+      "p95_ms": 34.627,
+      "p99_ms": 36.211,
+      "tokens_per_sec": 29.865,
+      "peak_rss_gb": 0.279,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 1,
+      "batch": 1,
+      "affinity": "physical",
+      "avg_token_ms": 34.138,
+      "ttft_avg_ms": 800.65,
+      "p50_ms": 33.238,
+      "p95_ms": 36.16,
+      "p99_ms": 59.29,
+      "tokens_per_sec": 29.292,
+      "peak_rss_gb": 0.279,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 1,
+      "batch": 2,
+      "affinity": "none",
+      "avg_token_ms": 56.831,
+      "ttft_avg_ms": 757.731,
+      "p50_ms": 56.857,
+      "p95_ms": 58.533,
+      "p99_ms": 59.256,
+      "tokens_per_sec": 17.596,
+      "peak_rss_gb": 0.314,
+      "n_generated_tokens": 32,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 1,
+      "batch": 2,
+      "affinity": "physical",
+      "avg_token_ms": 56.443,
+      "ttft_avg_ms": 784.113,
+      "p50_ms": 56.58,
+      "p95_ms": 57.984,
+      "p99_ms": 59.22,
+      "tokens_per_sec": 17.717,
+      "peak_rss_gb": 0.314,
+      "n_generated_tokens": 32,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 26.68,
+      "ttft_avg_ms": 556.35,
+      "p50_ms": 18.978,
+      "p95_ms": 60.323,
+      "p99_ms": 172.415,
+      "tokens_per_sec": 37.482,
+      "peak_rss_gb": 0.279,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "physical",
+      "avg_token_ms": 19.52,
+      "ttft_avg_ms": 434.774,
+      "p50_ms": 18.564,
+      "p95_ms": 23.127,
+      "p99_ms": 34.243,
+      "tokens_per_sec": 51.228,
+      "peak_rss_gb": 0.279,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 2,
+      "affinity": "none",
+      "avg_token_ms": 35.807,
+      "ttft_avg_ms": 440.955,
+      "p50_ms": 32.033,
+      "p95_ms": 44.753,
+      "p99_ms": 108.535,
+      "tokens_per_sec": 27.928,
+      "peak_rss_gb": 0.314,
+      "n_generated_tokens": 32,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 2,
+      "affinity": "physical",
+      "avg_token_ms": 32.319,
+      "ttft_avg_ms": 428.271,
+      "p50_ms": 31.679,
+      "p95_ms": 36.588,
+      "p99_ms": 42.203,
+      "tokens_per_sec": 30.941,
+      "peak_rss_gb": 0.314,
+      "n_generated_tokens": 32,
+      "iterations": 3
+    }
+  ],
+  "pareto_front": [
+    {
+      "model": "models/gpt2-int8-per.ecm",
+      "precision": "int8",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 14.206,
+      "ttft_avg_ms": 309.124,
+      "p50_ms": 13.908,
+      "p95_ms": 15.964,
+      "p99_ms": 22.637,
+      "tokens_per_sec": 70.393,
+      "peak_rss_gb": 0.2,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-int8-per.ecm",
+      "precision": "int8",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "physical",
+      "avg_token_ms": 13.821,
+      "ttft_avg_ms": 309.535,
+      "p50_ms": 13.813,
+      "p95_ms": 14.251,
+      "p99_ms": 14.287,
+      "tokens_per_sec": 72.352,
+      "peak_rss_gb": 0.2,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    }
+  ],
+  "pareto_configs": [
+    {
+      "precision": "int8",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "none",
+      "model": "models/gpt2-int8-per.ecm"
+    },
+    {
+      "precision": "int8",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "physical",
+      "model": "models/gpt2-int8-per.ecm"
+    }
+  ],
+  "recommendations": {
+    "low-latency-interactive": {
+      "description": "Interactive assistant / chat: minimize per-token latency and TTFT.",
+      "objectives": {
+        "avg_token_ms": "min",
+        "ttft_avg_ms": "min"
+      },
+      "config": {
+        "precision": "int8",
+        "threads": 2,
+        "batch": 1,
+        "affinity": "physical",
+        "model": "models/gpt2-int8-per.ecm"
+      },
+      "metrics": {
+        "avg_token_ms": 13.821,
+        "ttft_avg_ms": 309.535,
+        "p50_ms": 13.813,
+        "p95_ms": 14.251,
+        "p99_ms": 14.287,
+        "tokens_per_sec": 72.352,
+        "peak_rss_gb": 0.2
+      }
+    },
+    "high-throughput-batch": {
+      "description": "Offline batch / RAG embedding: maximize tokens generated per second.",
+      "objectives": {
+        "tokens_per_sec": "max"
+      },
+      "config": {
+        "precision": "int8",
+        "threads": 2,
+        "batch": 1,
+        "affinity": "physical",
+        "model": "models/gpt2-int8-per.ecm"
+      },
+      "metrics": {
+        "avg_token_ms": 13.821,
+        "ttft_avg_ms": 309.535,
+        "p50_ms": 13.813,
+        "p95_ms": 14.251,
+        "p99_ms": 14.287,
+        "tokens_per_sec": 72.352,
+        "peak_rss_gb": 0.2
+      }
+    },
+    "low-memory-edge": {
+      "description": "Memory-constrained edge device: minimize peak resident set.",
+      "objectives": {
+        "peak_rss_gb": "min"
+      },
+      "config": {
+        "precision": "int8",
+        "threads": 2,
+        "batch": 1,
+        "affinity": "none",
+        "model": "models/gpt2-int8-per.ecm"
+      },
+      "metrics": {
+        "avg_token_ms": 14.206,
+        "ttft_avg_ms": 309.124,
+        "p50_ms": 13.908,
+        "p95_ms": 15.964,
+        "p99_ms": 22.637,
+        "tokens_per_sec": 70.393,
+        "peak_rss_gb": 0.2
+      }
+    },
+    "balanced": {
+      "description": "General-purpose server: best compromise across all objectives.",
+      "objectives": {
+        "avg_token_ms": "min",
+        "tokens_per_sec": "max",
+        "peak_rss_gb": "min",
+        "ttft_avg_ms": "min"
+      },
+      "config": {
+        "precision": "fp16",
+        "threads": 2,
+        "batch": 1,
+        "affinity": "physical",
+        "model": "models/gpt2-fp16.ecm"
+      },
+      "metrics": {
+        "avg_token_ms": 19.52,
+        "ttft_avg_ms": 434.774,
+        "p50_ms": 18.564,
+        "p95_ms": 23.127,
+        "p99_ms": 34.243,
+        "tokens_per_sec": 51.228,
+        "peak_rss_gb": 0.279
+      }
+    }
+  },
+  "bounds": {
+    "avg_token_ms": [
+      13.821,
+      56.831
+    ],
+    "ttft_avg_ms": [
+      309.124,
+      800.65
+    ],
+    "p50_ms": [
+      13.813,
+      56.857
+    ],
+    "p95_ms": [
+      14.251,
+      60.323
+    ],
+    "p99_ms": [
+      14.287,
+      172.415
+    ],
+    "tokens_per_sec": [
+      17.596,
+      72.352
+    ],
+    "peak_rss_gb": [
+      0.2,
+      0.314
+    ]
+  }
+}
