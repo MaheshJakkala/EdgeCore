@@ -2,7 +2,7 @@
 
 Hardware-Adaptive Runtime & Deployment Compiler for Sovereign Small Language Models (SLMs).
 
-EdgeCore is a **research / B.Tech Major Project** system that automatically optimizes and
+EdgeCore is a system that automatically optimizes and
 packages a small language model for *your* hardware. You give it a model plus your CPU;
 it exports the model, proves the export is correct, benchmarks a space of execution
 configurations on real hardware, picks the best one for your goal, and emits a
