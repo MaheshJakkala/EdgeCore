@@ -1,0 +1,12 @@
+{
+  "model": "Qwen2.5-0.5B-Instruct",
+  "architecture": "Qwen2",
+  "precision": "fp16",
+  "n_ctx": 32768,
+  "n_layers": 24,
+  "n_heads": 14,
+  "n_embd": 896,
+  "vocab_size": 151936,
+  "params": 493961216,
+  "file": "model/qwen2-fp16.ecm"
+}

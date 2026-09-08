@@ -1,0 +1,52 @@
+{
+  "model_name": "gpt2",
+  "artifact": "models/gpt2-int8-per.ecm",
+  "file_bytes": 166039799,
+  "architecture": "gpt2",
+  "n_layer": 12,
+  "n_head": 12,
+  "n_embd": 768,
+  "head_dim": 64,
+  "n_ctx": 1024,
+  "vocab": 50257,
+  "eps": 1e-05,
+  "precision": "int8",
+  "tensor_count": 198,
+  "text_blob_bytes": 1515123,
+  "bytes_by_dtype": {
+    "fp16": 78767616,
+    "fp32": 817152,
+    "int8": 84934656
+  },
+  "weight_bytes": 178810368,
+  "weight_mb": 170.52685546875,
+  "params_total": 124439808,
+  "params_breakdown": {
+    "embeddings": 39383808,
+    "layernorms": 19968,
+    "transformer_layers": 84999168,
+    "recomputed_total": 124402944
+  },
+  "memory": {
+    "kv_cache_bytes": 37748736,
+    "kv_cache_mb": 36.0,
+    "kv_cache_mb_per_seq": 36.0,
+    "activation_ws_bytes": 41959424,
+    "estimated_peak_mb": 246.54248046875
+  },
+  "operators": {
+    "gemm": 49,
+    "layernorm": 25,
+    "gelu": 12,
+    "residual_add": 24,
+    "attention_blocks": 12
+  },
+  "flops": {
+    "decode_per_token": 284812800,
+    "prefill_per_token": 247064064,
+    "prefill_128_tokens": 31624200192
+  },
+  "estimated": {
+    "int8_speedup_hint": 1.315
+  }
+}

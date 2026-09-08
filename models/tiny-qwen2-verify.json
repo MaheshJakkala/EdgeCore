@@ -1,0 +1,152 @@
+{
+  "tool": "edgecore.verify",
+  "version": "0.1.0",
+  "runtime": "build/edgecore-runtime",
+  "hf_dir": null,
+  "thresholds": {
+    "cosine": 0.99,
+    "top1": 0.95,
+    "ppl_ratio": 1.05
+  },
+  "strict": false,
+  "overall": "pass",
+  "failed_models": [],
+  "models": {
+    "models/tiny-qwen2-int8.ecm": {
+      "model_name": "tiny-qwen2-int8",
+      "precision": "int8",
+      "primary_reference": "ecm",
+      "n_ctx": 64,
+      "lengths": {
+        "4": {
+          "n_tokens": 4,
+          "runtime_tokens_head": [
+            84,
+            104,
+            101,
+            114
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999999403953552,
+              "top1": 1.0,
+              "ppl_runtime": 238.88608137241215,
+              "ppl_reference": 238.88608121103513,
+              "ppl_ratio": 1.0000000006755396
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        },
+        "16": {
+          "n_tokens": 16,
+          "runtime_tokens_head": [
+            84,
+            104,
+            101,
+            114,
+            97,
+            112,
+            105,
+            100
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 0.9999363422393799,
+              "cosine_min": 0.9997928738594055,
+              "top1": 1.0,
+              "ppl_runtime": 243.140721115894,
+              "ppl_reference": 243.1533197226876,
+              "ppl_ratio": 0.9999481865729493
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        }
+      },
+      "summary": {
+        "worst_cosine_mean": 0.9999363422393799,
+        "worst_cosine_min": 0.9997928738594055,
+        "worst_top1": 1.0,
+        "max_ppl_ratio": 1.0000000006755396,
+        "pass": true
+      },
+      "tokenizer": {
+        "checked": true,
+        "agreement": 0.0,
+        "python_n": 55,
+        "c_n": 62,
+        "detail": "token count mismatch"
+      }
+    },
+    "models/tiny-qwen2-fp16.ecm": {
+      "model_name": "tiny-qwen2-fp16",
+      "precision": "fp16",
+      "primary_reference": "ecm",
+      "n_ctx": 64,
+      "lengths": {
+        "4": {
+          "n_tokens": 4,
+          "runtime_tokens_head": [
+            84,
+            104,
+            101,
+            114
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999999403953552,
+              "top1": 1.0,
+              "ppl_runtime": 238.64453251672623,
+              "ppl_reference": 238.64453490530514,
+              "ppl_ratio": 0.9999999899910597
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        },
+        "16": {
+          "n_tokens": 16,
+          "runtime_tokens_head": [
+            84,
+            104,
+            101,
+            114,
+            97,
+            112,
+            105,
+            100
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999998211860657,
+              "top1": 1.0,
+              "ppl_runtime": 243.05803625909456,
+              "ppl_reference": 243.05803548474992,
+              "ppl_ratio": 1.0000000031858427
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        }
+      },
+      "summary": {
+        "worst_cosine_mean": 1.0,
+        "worst_cosine_min": 0.9999998211860657,
+        "worst_top1": 1.0,
+        "max_ppl_ratio": 1.0000000031858427,
+        "pass": true
+      },
+      "tokenizer": {
+        "checked": true,
+        "agreement": 0.0,
+        "python_n": 55,
+        "c_n": 62,
+        "detail": "token count mismatch"
+      }
+    }
+  }
+}

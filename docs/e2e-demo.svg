@@ -1,0 +1,296 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="920" height="660" viewBox="0 0 920 660" role="img" aria-label="EdgeCore e2e demo">
+<defs>
+<style>.t { font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 14px; font-weight: 400; }.title { font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 13px; fill: #8b949e; }.cursor { fill: none; stroke: #c9d1d9; stroke-width: 1.5; }</style>
+<linearGradient id="win" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#21262d"/><stop offset="1" stop-color="#0d1117"/></linearGradient>
+</defs>
+<rect x="8" y="8" width="904" height="644" rx="10" fill="url(#win)" stroke="#30363d"/>
+<circle cx="32" cy="30" r="6" fill="#f85149"/>
+<circle cx="52" cy="30" r="6" fill="#d29922"/>
+<circle cx="72" cy="30" r="6" fill="#3fb950"/>
+<text x="92" y="35" class="title">EdgeCore — python3 -m edgecore.cli e2e --fetch</text>
+<g id="scroll">
+<g id="f0" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="64" class="t" fill="#58a6ff">$ make e2e</text>
+</g>
+<g id="f1" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="84" class="t" fill="#c9d1d9">[e2e] hardware: 11th Gen Intel(R) Core(TM) i3-1115G4 @ 3.00GHz | 4 logical cores | 8.1 GB</text>
+</g>
+<g id="f2" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="104" class="t" fill="#c9d1d9">       simd: sse sse2 sse4.1 sse4.2 fma f16c avx avx2 avx512f avx512bw</text>
+</g>
+<g id="f3" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="124" class="t" fill="#c9d1d9">[e2e] tiny synthetic sanity pass</text>
+</g>
+<g id="f4" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="144" class="t" fill="#3fb950">wrote models/tiny-gpt2-int8.ecm  (2 layers x32 embd, vocab 256)</text>
+</g>
+<g id="f5" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="164" class="t" fill="#3fb950">wrote models/tiny-gpt2-fp16.ecm  (2 layers x32 embd, vocab 256)</text>
+</g>
+<g id="f6" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="184" class="t" fill="#3fb950">overall: PASS</text>
+</g>
+<g id="f7" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="204" class="t" fill="#3fb950">  models/tiny-gpt2-int8.ecm: int8 cosine=1.0000 top1=1.0000 ppl=1.0000 -&gt; PASS</text>
+</g>
+<g id="f8" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="224" class="t" fill="#3fb950">  models/tiny-gpt2-fp16.ecm: fp16 cosine=1.0000 top1=1.0000 ppl=1.0000 -&gt; PASS</text>
+</g>
+<g id="f9" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="244" class="t" fill="#3fb950">[e2e] tiny sanity OK</text>
+</g>
+<g id="f10" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="264" class="t" fill="#c9d1d9">[e2e] fetching HF model &#x27;gpt2&#x27; into models/downloads/gpt2</text>
+</g>
+<g id="f11" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="284" class="t" fill="#3fb950">Done. Model in models/downloads/gpt2</text>
+</g>
+<g id="f12" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="304" class="t" fill="#c9d1d9">[e2e] exporting [&#x27;fp16&#x27;, &#x27;int8&#x27;] artifacts from models/downloads/gpt2</text>
+</g>
+<g id="f13" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="324" class="t" fill="#3fb950">[e2e]   exported fp16: models/gpt2-fp16.ecm</text>
+</g>
+<g id="f14" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="344" class="t" fill="#3fb950">[e2e]   exported int8: models/gpt2-int8-per.ecm</text>
+</g>
+<g id="f15" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="364" class="t" fill="#c9d1d9">[e2e] verifying [&#x27;int8&#x27;, &#x27;fp16&#x27;] artifacts vs fp32 ground truth</text>
+</g>
+<g id="f16" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="384" class="t" fill="#f85149">overall: FAIL</text>
+</g>
+<g id="f17" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="404" class="t" fill="#f85149">  models/gpt2-int8-per.ecm: int8 cosine=1.0000 top1=0.9375 ppl=1.0444 -&gt; FAIL</text>
+</g>
+<g id="f18" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="424" class="t" fill="#3fb950">  models/gpt2-fp16.ecm:     fp16 cosine=1.0000 top1=1.0000 ppl=1.0019 -&gt; PASS</text>
+</g>
+<g id="f19" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="444" class="t" fill="#d29922">[e2e] verification: 1/2 artifacts passed; packaging will prefer a verified config</text>
+</g>
+<g id="f20" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="464" class="t" fill="#c9d1d9">[e2e] benchmarking [&#x27;int8&#x27;, &#x27;fp16&#x27;] artifacts (threads=1,2 batch=1,2)</text>
+</g>
+<g id="f21" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="484" class="t" fill="#c9d1d9">grid: 16 configs</text>
+</g>
+<g id="f22" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="504" class="t" fill="#c9d1d9">  [ 1/16] int8 thr=1 batch=1 aff=none     avg=15.17ms ttft=347ms tps=65.9 rss=0.20GB</text>
+</g>
+<g id="f23" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="524" class="t" fill="#c9d1d9">  [ 2/16] int8 thr=1 batch=1 aff=physical avg=15.35ms ttft=344ms tps=65.1 rss=0.20GB</text>
+</g>
+<g id="f24" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="544" class="t" fill="#c9d1d9">  [ 3/16] int8 thr=1 batch=2 aff=none     avg=27.83ms ttft=367ms tps=35.9 rss=0.24GB</text>
+</g>
+<g id="f25" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="564" class="t" fill="#c9d1d9">  [ 4/16] int8 thr=1 batch=2 aff=physical avg=27.73ms ttft=407ms tps=36.1 rss=0.24GB</text>
+</g>
+<g id="f26" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="584" class="t" fill="#d29922">  [ 5/16] int8 thr=2 batch=1 aff=none     avg=11.27ms ttft=240ms tps=88.7 rss=0.20GB</text>
+</g>
+<g id="f27" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="604" class="t" fill="#c9d1d9">  [ 6/16] int8 thr=2 batch=1 aff=physical avg=11.55ms ttft=236ms tps=86.6 rss=0.20GB</text>
+</g>
+<g id="f28" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="624" class="t" fill="#c9d1d9">  [ 7/16] int8 thr=2 batch=2 aff=none     avg=17.13ms ttft=236ms tps=58.4 rss=0.24GB</text>
+</g>
+<g id="f29" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="644" class="t" fill="#c9d1d9">  [ 8/16] int8 thr=2 batch=2 aff=physical avg=17.54ms ttft=238ms tps=57.0 rss=0.24GB</text>
+</g>
+<g id="f30" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="664" class="t" fill="#c9d1d9">  [ 9/16] fp16 thr=1 batch=1 aff=none     avg=23.35ms ttft=614ms tps=42.8 rss=0.28GB</text>
+</g>
+<g id="f31" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="684" class="t" fill="#c9d1d9">  [10/16] fp16 thr=1 batch=1 aff=physical avg=23.24ms ttft=614ms tps=43.0 rss=0.28GB</text>
+</g>
+<g id="f32" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="704" class="t" fill="#c9d1d9">  [11/16] fp16 thr=1 batch=2 aff=none     avg=41.64ms ttft=595ms tps=24.0 rss=0.31GB</text>
+</g>
+<g id="f33" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="724" class="t" fill="#c9d1d9">  [12/16] fp16 thr=1 batch=2 aff=physical avg=40.22ms ttft=610ms tps=24.9 rss=0.31GB</text>
+</g>
+<g id="f34" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="744" class="t" fill="#d29922">  [13/16] fp16 thr=2 batch=1 aff=none     avg=14.91ms ttft=354ms tps=67.1 rss=0.28GB</text>
+</g>
+<g id="f35" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="764" class="t" fill="#c9d1d9">  [14/16] fp16 thr=2 batch=1 aff=physical avg=15.46ms ttft=366ms tps=64.7 rss=0.28GB</text>
+</g>
+<g id="f36" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="784" class="t" fill="#c9d1d9">  [15/16] fp16 thr=2 batch=2 aff=none     avg=27.89ms ttft=374ms tps=35.9 rss=0.31GB</text>
+</g>
+<g id="f37" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="804" class="t" fill="#c9d1d9">  [16/16] fp16 thr=2 batch=2 aff=physical avg=24.54ms ttft=354ms tps=40.7 rss=0.31GB</text>
+</g>
+<g id="f38" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="824" class="t" fill="#d29922">[e2e] scenario &#x27;balanced&#x27; recommended gpt2-int8-per.ecm (UNVERIFIED)</text>
+</g>
+<g id="f39" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="844" class="t" fill="#d29922">[e2e] falling back to verified config: gpt2-fp16.ecm (fp16, threads=2, batch=1)</text>
+</g>
+<g id="f40" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="864" class="t" fill="#c9d1d9">[e2e] building deployment bundle (scenario=balanced, model=gpt2-fp16.ecm)</text>
+</g>
+<g id="f41" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="884" class="t" fill="#3fb950">[e2e] package ready: dist/gpt2-fp16-balanced.tar.gz</text>
+</g>
+<g id="f42" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="904" class="t" fill="#c9d1d9">&#160;</text>
+</g>
+<g id="f43" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="924" class="t" fill="#d29922">================ EdgeCore e2e summary ================</text>
+</g>
+<g id="f44" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="944" class="t" fill="#c9d1d9">model:        models/gpt2-fp16.ecm (gpt2-fp16)</text>
+</g>
+<g id="f45" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="964" class="t" fill="#f85149">verification: int8 FAIL (top1 0.9375) | fp16 PASS -&gt; packaged</text>
+</g>
+<g id="f46" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="984" class="t" fill="#3fb950">tuned config: precision=fp16 threads=2 batch=1 affinity=none</text>
+</g>
+<g id="f47" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="1004" class="t" fill="#3fb950">tuned metrics: avg_token=14.9ms tps=67.1 rss=0.28GB</text>
+</g>
+<g id="f48" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="1024" class="t" fill="#3fb950">package:      dist/gpt2-fp16-balanced</text>
+</g>
+<g id="f49" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="1044" class="t" fill="#c9d1d9">&#160;</text>
+</g>
+<g id="f50" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="1064" class="t" fill="#58a6ff">$ ./bin/run.sh --mode generate --prompt &quot;Once upon a time&quot; --n-tokens 24</text>
+</g>
+<g id="f51" opacity="0">
+<set attributeName="opacity" to="0" begin="0s"/>
+<text x="24" y="1084" class="t" fill="#3fb950">Once upon a time, the world was a place of great beauty and great danger...</text>
+</g>
+</g>
+<animate xlink:href="#f0" attributeName="opacity" from="0" to="1" dur="120ms" begin="0.000s" fill="freeze"/>
+<animate xlink:href="#f1" attributeName="opacity" from="0" to="1" dur="120ms" begin="0.700s" fill="freeze"/>
+<animate xlink:href="#f2" attributeName="opacity" from="0" to="1" dur="120ms" begin="1.200s" fill="freeze"/>
+<animate xlink:href="#f3" attributeName="opacity" from="0" to="1" dur="120ms" begin="1.600s" fill="freeze"/>
+<animate xlink:href="#f4" attributeName="opacity" from="0" to="1" dur="120ms" begin="2.000s" fill="freeze"/>
+<animate xlink:href="#f5" attributeName="opacity" from="0" to="1" dur="120ms" begin="2.300s" fill="freeze"/>
+<animate xlink:href="#f6" attributeName="opacity" from="0" to="1" dur="120ms" begin="2.700s" fill="freeze"/>
+<animate xlink:href="#f7" attributeName="opacity" from="0" to="1" dur="120ms" begin="3.000s" fill="freeze"/>
+<animate xlink:href="#f8" attributeName="opacity" from="0" to="1" dur="120ms" begin="3.300s" fill="freeze"/>
+<animate xlink:href="#f9" attributeName="opacity" from="0" to="1" dur="120ms" begin="3.700s" fill="freeze"/>
+<animate xlink:href="#f10" attributeName="opacity" from="0" to="1" dur="120ms" begin="4.200s" fill="freeze"/>
+<animate xlink:href="#f11" attributeName="opacity" from="0" to="1" dur="120ms" begin="4.800s" fill="freeze"/>
+<animate xlink:href="#f12" attributeName="opacity" from="0" to="1" dur="120ms" begin="5.200s" fill="freeze"/>
+<animate xlink:href="#f13" attributeName="opacity" from="0" to="1" dur="120ms" begin="5.600s" fill="freeze"/>
+<animate xlink:href="#f14" attributeName="opacity" from="0" to="1" dur="120ms" begin="5.900s" fill="freeze"/>
+<animate xlink:href="#f15" attributeName="opacity" from="0" to="1" dur="120ms" begin="6.400s" fill="freeze"/>
+<animate xlink:href="#f16" attributeName="opacity" from="0" to="1" dur="120ms" begin="6.900s" fill="freeze"/>
+<animate xlink:href="#f17" attributeName="opacity" from="0" to="1" dur="120ms" begin="7.200s" fill="freeze"/>
+<animate xlink:href="#f18" attributeName="opacity" from="0" to="1" dur="120ms" begin="7.700s" fill="freeze"/>
+<animate xlink:href="#f19" attributeName="opacity" from="0" to="1" dur="120ms" begin="8.300s" fill="freeze"/>
+<animate xlink:href="#f20" attributeName="opacity" from="0" to="1" dur="120ms" begin="8.900s" fill="freeze"/>
+<animate xlink:href="#f21" attributeName="opacity" from="0" to="1" dur="120ms" begin="9.300s" fill="freeze"/>
+<animate xlink:href="#f22" attributeName="opacity" from="0" to="1" dur="120ms" begin="9.600s" fill="freeze"/>
+<animate xlink:href="#f23" attributeName="opacity" from="0" to="1" dur="120ms" begin="9.860s" fill="freeze"/>
+<animate xlink:href="#f24" attributeName="opacity" from="0" to="1" dur="120ms" begin="10.120s" fill="freeze"/>
+<animate xlink:href="#f25" attributeName="opacity" from="0" to="1" dur="120ms" begin="10.380s" fill="freeze"/>
+<animate xlink:href="#f26" attributeName="opacity" from="0" to="1" dur="120ms" begin="10.640s" fill="freeze"/>
+<animate xlink:href="#f27" attributeName="opacity" from="0" to="1" dur="120ms" begin="10.960s" fill="freeze"/>
+<animate xlink:href="#f28" attributeName="opacity" from="0" to="1" dur="120ms" begin="11.220s" fill="freeze"/>
+<animate xlink:href="#f29" attributeName="opacity" from="0" to="1" dur="120ms" begin="11.480s" fill="freeze"/>
+<animate xlink:href="#f30" attributeName="opacity" from="0" to="1" dur="120ms" begin="11.740s" fill="freeze"/>
+<animate xlink:href="#f31" attributeName="opacity" from="0" to="1" dur="120ms" begin="12.000s" fill="freeze"/>
+<animate xlink:href="#f32" attributeName="opacity" from="0" to="1" dur="120ms" begin="12.260s" fill="freeze"/>
+<animate xlink:href="#f33" attributeName="opacity" from="0" to="1" dur="120ms" begin="12.520s" fill="freeze"/>
+<animate xlink:href="#f34" attributeName="opacity" from="0" to="1" dur="120ms" begin="12.780s" fill="freeze"/>
+<animate xlink:href="#f35" attributeName="opacity" from="0" to="1" dur="120ms" begin="13.100s" fill="freeze"/>
+<animate xlink:href="#f36" attributeName="opacity" from="0" to="1" dur="120ms" begin="13.360s" fill="freeze"/>
+<animate xlink:href="#f37" attributeName="opacity" from="0" to="1" dur="120ms" begin="13.620s" fill="freeze"/>
+<animate xlink:href="#f38" attributeName="opacity" from="0" to="1" dur="120ms" begin="14.120s" fill="freeze"/>
+<animate xlink:href="#f39" attributeName="opacity" from="0" to="1" dur="120ms" begin="14.420s" fill="freeze"/>
+<animate xlink:href="#f40" attributeName="opacity" from="0" to="1" dur="120ms" begin="15.020s" fill="freeze"/>
+<animate xlink:href="#f41" attributeName="opacity" from="0" to="1" dur="120ms" begin="15.420s" fill="freeze"/>
+<animate xlink:href="#f42" attributeName="opacity" from="0" to="1" dur="120ms" begin="16.120s" fill="freeze"/>
+<animate xlink:href="#f43" attributeName="opacity" from="0" to="1" dur="120ms" begin="16.420s" fill="freeze"/>
+<animate xlink:href="#f44" attributeName="opacity" from="0" to="1" dur="120ms" begin="16.720s" fill="freeze"/>
+<animate xlink:href="#f45" attributeName="opacity" from="0" to="1" dur="120ms" begin="17.020s" fill="freeze"/>
+<animate xlink:href="#f46" attributeName="opacity" from="0" to="1" dur="120ms" begin="17.320s" fill="freeze"/>
+<animate xlink:href="#f47" attributeName="opacity" from="0" to="1" dur="120ms" begin="17.620s" fill="freeze"/>
+<animate xlink:href="#f48" attributeName="opacity" from="0" to="1" dur="120ms" begin="17.920s" fill="freeze"/>
+<animate xlink:href="#f49" attributeName="opacity" from="0" to="1" dur="120ms" begin="18.520s" fill="freeze"/>
+<animate xlink:href="#f50" attributeName="opacity" from="0" to="1" dur="120ms" begin="18.720s" fill="freeze"/>
+<animate xlink:href="#f51" attributeName="opacity" from="0" to="1" dur="120ms" begin="19.420s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 0" to="0 -20" dur="250ms" begin="11.740s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -20" to="0 -40" dur="250ms" begin="12.000s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -40" to="0 -60" dur="250ms" begin="12.260s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -60" to="0 -80" dur="250ms" begin="12.520s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -80" to="0 -100" dur="250ms" begin="12.780s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -100" to="0 -120" dur="250ms" begin="13.100s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -120" to="0 -140" dur="250ms" begin="13.360s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -140" to="0 -160" dur="250ms" begin="13.620s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -160" to="0 -180" dur="250ms" begin="14.120s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -180" to="0 -200" dur="250ms" begin="14.420s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -200" to="0 -220" dur="250ms" begin="15.020s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -220" to="0 -240" dur="250ms" begin="15.420s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -240" to="0 -260" dur="250ms" begin="16.120s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -260" to="0 -280" dur="250ms" begin="16.420s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -280" to="0 -300" dur="250ms" begin="16.720s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -300" to="0 -320" dur="250ms" begin="17.020s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -320" to="0 -340" dur="250ms" begin="17.320s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -340" to="0 -360" dur="250ms" begin="17.620s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -360" to="0 -380" dur="250ms" begin="17.920s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -380" to="0 -400" dur="250ms" begin="18.520s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -400" to="0 -420" dur="250ms" begin="18.720s" fill="freeze"/>
+<animateTransform xlink:href="#scroll" attributeName="transform" type="translate" from="0 -420" to="0 -440" dur="250ms" begin="19.420s" fill="freeze"/>
+<rect x="438" y="1071" width="9" height="16" class="cursor" opacity="0"><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.4;0.5;1" dur="1s" repeatCount="indefinite" begin="19.420s"/></rect>
+</svg>

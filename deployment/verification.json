@@ -1,0 +1,100 @@
+{
+  "tool": "edgecore.verify",
+  "version": "0.1.0",
+  "runtime": "build/edgecore-runtime",
+  "hf_dir": "models/downloads/qwen2.5-0.5b",
+  "truth_ecm": null,
+  "thresholds": {
+    "cosine": 0.99,
+    "top1": 0.95,
+    "ppl_ratio": 1.05
+  },
+  "strict": false,
+  "overall": "pass",
+  "failed_models": [],
+  "models": {
+    "models/qwen2-fp16.ecm": {
+      "model_name": "qwen2",
+      "precision": "fp16",
+      "primary_reference": "hf",
+      "n_ctx": 32768,
+      "lengths": {
+        "4": {
+          "n_tokens": 4,
+          "runtime_tokens_head": [
+            785,
+            11048,
+            24376,
+            315
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 0.9999997615814209,
+              "cosine_min": 0.9999994039535522,
+              "top1": 1.0,
+              "ppl_runtime": 1578250.4098895763,
+              "ppl_reference": 1579624.834311769,
+              "ppl_ratio": 0.9991299045239488
+            },
+            "hf": {
+              "cosine_mean": 0.999997079372406,
+              "cosine_min": 0.9999893307685852,
+              "top1": 1.0,
+              "ppl_runtime": 1578250.4098895763,
+              "ppl_reference": 1575458.3170902254,
+              "ppl_ratio": 1.0017722416195103
+            }
+          },
+          "primary": "hf",
+          "pass": true
+        },
+        "16": {
+          "n_tokens": 16,
+          "runtime_tokens_head": [
+            785,
+            11048,
+            24376,
+            315,
+            2613,
+            4128,
+            4119,
+            702
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 0.9999997615814209,
+              "cosine_min": 0.9999986290931702,
+              "top1": 1.0,
+              "ppl_runtime": 3444347.144663449,
+              "ppl_reference": 3444431.7090635826,
+              "ppl_ratio": 0.9999754489543482
+            },
+            "hf": {
+              "cosine_mean": 0.9999951720237732,
+              "cosine_min": 0.9999535083770752,
+              "top1": 1.0,
+              "ppl_runtime": 3444347.144663449,
+              "ppl_reference": 3444229.7027189215,
+              "ppl_ratio": 1.0000340981742404
+            }
+          },
+          "primary": "hf",
+          "pass": true
+        }
+      },
+      "summary": {
+        "worst_cosine_mean": 0.9999951720237732,
+        "worst_cosine_min": 0.9999535083770752,
+        "worst_top1": 1.0,
+        "max_ppl_ratio": 1.0017722416195103,
+        "pass": true
+      },
+      "tokenizer": {
+        "checked": true,
+        "agreement": 1.0,
+        "python_n": 10,
+        "c_n": 10
+      }
+    }
+  }
+}

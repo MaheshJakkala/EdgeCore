@@ -1,0 +1,51 @@
+{
+  "model_name": "qwen2",
+  "artifact": "models/qwen2-fp16.ecm",
+  "file_bytes": 993267679,
+  "architecture": "qwen2",
+  "n_layer": 24,
+  "n_head": 14,
+  "n_embd": 896,
+  "head_dim": 64,
+  "n_ctx": 32768,
+  "vocab": 151936,
+  "eps": 1e-06,
+  "precision": "fp16",
+  "tensor_count": 220,
+  "text_blob_bytes": 5163266,
+  "bytes_by_dtype": {
+    "fp16": 987922432,
+    "fp32": 175616
+  },
+  "weight_bytes": 1405662720,
+  "weight_mb": 1340.54443359375,
+  "params_total": 493961216,
+  "params_breakdown": {
+    "embeddings": 136134656,
+    "layernorms": 43904,
+    "transformer_layers": 357826560,
+    "recomputed_total": 494005120
+  },
+  "memory": {
+    "kv_cache_bytes": 402653184,
+    "kv_cache_mb": 384.0,
+    "kv_cache_mb_per_seq": 384.0,
+    "activation_ws_bytes": 6912344064,
+    "estimated_peak_mb": 8316.66943359375
+  },
+  "operators": {
+    "gemm": 169,
+    "layernorm": 49,
+    "activation": 24,
+    "residual_add": 48,
+    "attention_blocks": 24
+  },
+  "flops": {
+    "decode_per_token": 3806494720,
+    "prefill_per_token": 987922432,
+    "prefill_128_tokens": 126454071296
+  },
+  "estimated": {
+    "int8_speedup_hint": 1.0
+  }
+}

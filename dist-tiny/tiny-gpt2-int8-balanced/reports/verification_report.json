@@ -1,0 +1,200 @@
+{
+  "tool": "edgecore.verify",
+  "version": "0.1.0",
+  "runtime": "/workspace/build/edgecore-runtime",
+  "hf_dir": null,
+  "thresholds": {
+    "cosine": 0.99,
+    "top1": 0.95,
+    "ppl_ratio": 1.05
+  },
+  "strict": false,
+  "overall": "pass",
+  "failed_models": [],
+  "models": {
+    "models/tiny-gpt2-int8.ecm": {
+      "model_name": "tiny-gpt2-int8",
+      "precision": "int8",
+      "primary_reference": "ecm",
+      "n_ctx": 64,
+      "lengths": {
+        "4": {
+          "n_tokens": 4,
+          "runtime_tokens_head": [
+            84,
+            104,
+            101,
+            32
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999999403953552,
+              "top1": 1.0,
+              "ppl_runtime": 267.16457257359195,
+              "ppl_reference": 267.16457235004054,
+              "ppl_ratio": 1.0000000008367556
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        },
+        "16": {
+          "n_tokens": 16,
+          "runtime_tokens_head": [
+            84,
+            104,
+            101,
+            32,
+            114,
+            97,
+            112,
+            105
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999998807907104,
+              "top1": 1.0,
+              "ppl_runtime": 269.942145919448,
+              "ppl_reference": 269.94214559476245,
+              "ppl_ratio": 1.000000001202797
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        },
+        "62": {
+          "n_tokens": 62,
+          "runtime_tokens_head": [
+            84,
+            104,
+            101,
+            32,
+            114,
+            97,
+            112,
+            105
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999998807907104,
+              "top1": 1.0,
+              "ppl_runtime": 270.4183762019628,
+              "ppl_reference": 270.4183761569762,
+              "ppl_ratio": 1.0000000001663594
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        }
+      },
+      "summary": {
+        "worst_cosine_mean": 1.0,
+        "worst_cosine_min": 0.9999998807907104,
+        "worst_top1": 1.0,
+        "max_ppl_ratio": 1.000000001202797,
+        "pass": true
+      },
+      "tokenizer": {
+        "checked": true,
+        "agreement": 1.0,
+        "python_n": 62,
+        "c_n": 62
+      }
+    },
+    "models/tiny-gpt2-fp16.ecm": {
+      "model_name": "tiny-gpt2-fp16",
+      "precision": "fp16",
+      "primary_reference": "ecm",
+      "n_ctx": 64,
+      "lengths": {
+        "4": {
+          "n_tokens": 4,
+          "runtime_tokens_head": [
+            84,
+            104,
+            101,
+            32
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999999403953552,
+              "top1": 1.0,
+              "ppl_runtime": 267.385752731735,
+              "ppl_reference": 267.38575205160004,
+              "ppl_ratio": 1.000000002543647
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        },
+        "16": {
+          "n_tokens": 16,
+          "runtime_tokens_head": [
+            84,
+            104,
+            101,
+            32,
+            114,
+            97,
+            112,
+            105
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999999403953552,
+              "top1": 1.0,
+              "ppl_runtime": 269.98658422982624,
+              "ppl_reference": 269.9865831919151,
+              "ppl_ratio": 1.0000000038443064
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        },
+        "62": {
+          "n_tokens": 62,
+          "runtime_tokens_head": [
+            84,
+            104,
+            101,
+            32,
+            114,
+            97,
+            112,
+            105
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999998807907104,
+              "top1": 1.0,
+              "ppl_runtime": 270.51951558935133,
+              "ppl_reference": 270.51951558165524,
+              "ppl_ratio": 1.0000000000284492
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        }
+      },
+      "summary": {
+        "worst_cosine_mean": 1.0,
+        "worst_cosine_min": 0.9999998807907104,
+        "worst_top1": 1.0,
+        "max_ppl_ratio": 1.0000000038443064,
+        "pass": true
+      },
+      "tokenizer": {
+        "checked": true,
+        "agreement": 1.0,
+        "python_n": 62,
+        "c_n": 62
+      }
+    }
+  }
+}

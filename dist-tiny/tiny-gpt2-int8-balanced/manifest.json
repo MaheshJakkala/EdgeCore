@@ -1,0 +1,125 @@
+{
+  "package_name": "tiny-gpt2-int8-balanced",
+  "edgecore_version": "0.1.0",
+  "created_at": "2026-08-29T18:10:11+0000",
+  "toolchain": {
+    "python": "3.11.2",
+    "numpy": "2.4.6"
+  },
+  "git": {
+    "commit": "46cc5d980a572136e7d07ec5286942bfde823107",
+    "dirty": true
+  },
+  "model": {
+    "artifact": "models/tiny-gpt2-int8.ecm",
+    "size_mb": 0.054,
+    "sha256": "8ae03dd876db7223c594350fcab8fc9adcca920798859fa82871054149dc6d80",
+    "model_name": "tiny-gpt2-int8",
+    "n_layer": 2,
+    "n_head": 2,
+    "n_embd": 32,
+    "n_ctx": 64,
+    "vocab": 256,
+    "params_total": 35456,
+    "precision": "int8"
+  },
+  "runtime": {
+    "binary": "bin/edgecore-runtime",
+    "sha256": "1545d2be7f6eb867fd304de21bdc36540d683d28b334e28c441810cb2cbfb4d0"
+  },
+  "config": {
+    "precision": "fp16",
+    "threads": 1,
+    "batch": 1,
+    "affinity": "none",
+    "model": "models/tiny-gpt2-fp16.ecm"
+  },
+  "scenario": {
+    "name": "balanced",
+    "description": "General-purpose server: best compromise across all objectives.",
+    "objectives": {
+      "avg_token_ms": "min",
+      "tokens_per_sec": "max",
+      "peak_rss_gb": "min",
+      "ttft_avg_ms": "min"
+    }
+  },
+  "hardware": {
+    "cpu_model": "Intel(R) Xeon(R) Processor @ 2.50GHz",
+    "physical_cores": 2,
+    "logical_cores": 2,
+    "ram_gb": 8.35,
+    "simd": "sse sse2 sse4.1 sse4.2 fma f16c avx avx2 avx512f avx512bw",
+    "memory_bandwidth_gbps": 5.93,
+    "numa_nodes": 1
+  },
+  "benchmark": {
+    "grid_size": 8,
+    "scenario_metrics": {
+      "avg_token_ms": 0.042,
+      "ttft_avg_ms": 1.319,
+      "p50_ms": 0.041,
+      "p95_ms": 0.047,
+      "p99_ms": 0.047,
+      "tokens_per_sec": 23993.726,
+      "peak_rss_gb": 0.003
+    }
+  },
+  "verification": {
+    "overall": "pass",
+    "thresholds": {
+      "cosine": 0.99,
+      "top1": 0.95,
+      "ppl_ratio": 1.05
+    },
+    "models": {
+      "models/tiny-gpt2-int8.ecm": {
+        "precision": "int8",
+        "primary_reference": "ecm",
+        "pass": true
+      },
+      "models/tiny-gpt2-fp16.ecm": {
+        "precision": "fp16",
+        "primary_reference": "ecm",
+        "pass": true
+      }
+    }
+  },
+  "files": [
+    {
+      "path": "bin/edgecore-runtime",
+      "bytes": 60584,
+      "sha256": "1545d2be7f6eb867fd304de21bdc36540d683d28b334e28c441810cb2cbfb4d0"
+    },
+    {
+      "path": "bin/run.sh",
+      "bytes": 328,
+      "sha256": "c0e97e39c86881c14f2b771db582fa7ce675b4c2d4f5606a6bf4b5a45f3cf85e"
+    },
+    {
+      "path": "config.json",
+      "bytes": 578,
+      "sha256": "4510ab548399c1c57c0218e27d340199e6e1968cc1828f406ea890c67a2e6032"
+    },
+    {
+      "path": "hardware.json",
+      "bytes": 647,
+      "sha256": "342255c83097f26451046aed670903bbd63478b6a29f0390398b9ea09d01e2b6"
+    },
+    {
+      "path": "model.ecm",
+      "bytes": 54274,
+      "sha256": "8ae03dd876db7223c594350fcab8fc9adcca920798859fa82871054149dc6d80"
+    },
+    {
+      "path": "reports/benchmark_report.json",
+      "bytes": 8222,
+      "sha256": "cbadf0200fa10603b65d71b3647d825b62ee8d9fba3bd759d4380a06a979d8a4"
+    },
+    {
+      "path": "reports/verification_report.json",
+      "bytes": 4845,
+      "sha256": "b135b07dd5e1f1e1ba1cff069cabc8d9352698a04b4b53715ca5c0ab1d9d628a"
+    }
+  ]
+}

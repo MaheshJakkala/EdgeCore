@@ -1,0 +1,51 @@
+{
+  "model_name": "tiny-gpt2-fp16",
+  "artifact": "models/tiny-gpt2-fp16.ecm",
+  "file_bytes": 76368,
+  "architecture": "gpt2",
+  "n_layer": 2,
+  "n_head": 2,
+  "n_embd": 32,
+  "head_dim": 16,
+  "n_ctx": 64,
+  "vocab": 256,
+  "eps": 1e-05,
+  "precision": "fp16",
+  "tensor_count": 30,
+  "text_blob_bytes": 2312,
+  "bytes_by_dtype": {
+    "fp16": 69632,
+    "fp32": 3584
+  },
+  "weight_bytes": 73216,
+  "weight_mb": 0.06982421875,
+  "params_total": 35456,
+  "params_breakdown": {
+    "embeddings": 10240,
+    "layernorms": 192,
+    "transformer_layers": 25024,
+    "recomputed_total": 35456
+  },
+  "memory": {
+    "kv_cache_bytes": 16384,
+    "kv_cache_mb": 0.015625,
+    "kv_cache_mb_per_seq": 0.015625,
+    "activation_ws_bytes": 115712,
+    "estimated_peak_mb": 0.19580078125
+  },
+  "operators": {
+    "gemm": 9,
+    "layernorm": 5,
+    "activation": 2,
+    "residual_add": 4,
+    "attention_blocks": 2
+  },
+  "flops": {
+    "decode_per_token": 81920,
+    "prefill_per_token": 65536,
+    "prefill_128_tokens": 8388608
+  },
+  "estimated": {
+    "int8_speedup_hint": 1.0
+  }
+}

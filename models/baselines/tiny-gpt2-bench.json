@@ -1,0 +1,151 @@
+{
+  "hardware": {
+    "cpu_model": "Intel(R) Xeon(R) Processor @ 2.50GHz",
+    "physical_cores": 2,
+    "logical_cores": 2,
+    "ram_gb": 8.35,
+    "simd": "sse sse2 sse4.1 sse4.2 fma f16c avx avx2 avx512f avx512bw"
+  },
+  "bench_config": {
+    "prompt_len_tokens": 27,
+    "prompt": "The rapid adoption of small language models has created a need for efficient deployment on diverse computing environments such as commodity CPUs, on-premise servers and edge devices.",
+    "n_tokens": 16,
+    "warmup": 1,
+    "iters": 3
+  },
+  "grid_size": 16,
+  "measurements": [
+    {
+      "model": "models/tiny-gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 1,
+      "batch": 1,
+      "affinity": "none",
+      "error": "free(): invalid next size (normal)"
+    },
+    {
+      "model": "models/tiny-gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 1,
+      "batch": 1,
+      "affinity": "physical",
+      "error": "free(): invalid next size (normal)"
+    },
+    {
+      "model": "models/tiny-gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 1,
+      "batch": 2,
+      "affinity": "none",
+      "error": "free(): invalid next size (normal)"
+    },
+    {
+      "model": "models/tiny-gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 1,
+      "batch": 2,
+      "affinity": "physical",
+      "error": "free(): invalid next size (normal)"
+    },
+    {
+      "model": "models/tiny-gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "none",
+      "error": "free(): invalid next size (normal)"
+    },
+    {
+      "model": "models/tiny-gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "physical",
+      "error": "free(): invalid next size (normal)"
+    },
+    {
+      "model": "models/tiny-gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 2,
+      "affinity": "none",
+      "error": "free(): invalid next size (normal)"
+    },
+    {
+      "model": "models/tiny-gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 2,
+      "affinity": "physical",
+      "error": "free(): invalid next size (normal)"
+    },
+    {
+      "model": "models/tiny-gpt2-int8.ecm",
+      "precision": "int8",
+      "threads": 1,
+      "batch": 1,
+      "affinity": "none",
+      "error": "double free or corruption (!prev)"
+    },
+    {
+      "model": "models/tiny-gpt2-int8.ecm",
+      "precision": "int8",
+      "threads": 1,
+      "batch": 1,
+      "affinity": "physical",
+      "error": "double free or corruption (!prev)"
+    },
+    {
+      "model": "models/tiny-gpt2-int8.ecm",
+      "precision": "int8",
+      "threads": 1,
+      "batch": 2,
+      "affinity": "none",
+      "error": "free(): invalid next size (normal)"
+    },
+    {
+      "model": "models/tiny-gpt2-int8.ecm",
+      "precision": "int8",
+      "threads": 1,
+      "batch": 2,
+      "affinity": "physical",
+      "error": "free(): invalid next size (normal)"
+    },
+    {
+      "model": "models/tiny-gpt2-int8.ecm",
+      "precision": "int8",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "none",
+      "error": "double free or corruption (!prev)"
+    },
+    {
+      "model": "models/tiny-gpt2-int8.ecm",
+      "precision": "int8",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "physical",
+      "error": "double free or corruption (!prev)"
+    },
+    {
+      "model": "models/tiny-gpt2-int8.ecm",
+      "precision": "int8",
+      "threads": 2,
+      "batch": 2,
+      "affinity": "none",
+      "error": "free(): invalid next size (normal)"
+    },
+    {
+      "model": "models/tiny-gpt2-int8.ecm",
+      "precision": "int8",
+      "threads": 2,
+      "batch": 2,
+      "affinity": "physical",
+      "error": "free(): invalid next size (normal)"
+    }
+  ],
+  "pareto_front": [],
+  "pareto_configs": [],
+  "recommendations": {},
+  "bounds": {}
+}

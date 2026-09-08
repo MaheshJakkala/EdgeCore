@@ -1,0 +1,218 @@
+{
+  "hardware": {
+    "cpu_model": "11th Gen Intel(R) Core(TM) i3-1115G4 @ 3.00GHz",
+    "physical_cores": 2,
+    "logical_cores": 4,
+    "ram_gb": 8.1,
+    "simd": "sse sse2 sse4.1 sse4.2 fma f16c avx avx2 avx512f avx512bw"
+  },
+  "bench_config": {
+    "prompt_len_tokens": 27,
+    "prompt": "The rapid adoption of small language models has created a need for efficient deployment on diverse computing environments such as commodity CPUs, on-premise servers and edge devices.",
+    "n_tokens": 16,
+    "warmup": 1,
+    "iters": 3
+  },
+  "grid_size": 3,
+  "measurements": [
+    {
+      "model": "models/qwen2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 1,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 108.278,
+      "ttft_avg_ms": 2451.621,
+      "p50_ms": 105.239,
+      "p95_ms": 128.662,
+      "p99_ms": 160.591,
+      "tokens_per_sec": 9.235,
+      "peak_rss_gb": 1.329,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/qwen2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 67.729,
+      "ttft_avg_ms": 1351.907,
+      "p50_ms": 66.672,
+      "p95_ms": 77.161,
+      "p99_ms": 84.931,
+      "tokens_per_sec": 14.765,
+      "peak_rss_gb": 1.329,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/qwen2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 4,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 174.249,
+      "ttft_avg_ms": 2167.851,
+      "p50_ms": 140.638,
+      "p95_ms": 385.264,
+      "p99_ms": 631.511,
+      "tokens_per_sec": 5.739,
+      "peak_rss_gb": 1.329,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    }
+  ],
+  "pareto_front": [
+    {
+      "model": "models/qwen2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 67.729,
+      "ttft_avg_ms": 1351.907,
+      "p50_ms": 66.672,
+      "p95_ms": 77.161,
+      "p99_ms": 84.931,
+      "tokens_per_sec": 14.765,
+      "peak_rss_gb": 1.329,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    }
+  ],
+  "pareto_configs": [
+    {
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "none",
+      "model": "models/qwen2-fp16.ecm"
+    }
+  ],
+  "recommendations": {
+    "low-latency-interactive": {
+      "description": "Interactive assistant / chat: minimize per-token latency and TTFT.",
+      "objectives": {
+        "avg_token_ms": "min",
+        "ttft_avg_ms": "min"
+      },
+      "config": {
+        "precision": "fp16",
+        "threads": 2,
+        "batch": 1,
+        "affinity": "none",
+        "model": "models/qwen2-fp16.ecm"
+      },
+      "metrics": {
+        "avg_token_ms": 67.729,
+        "ttft_avg_ms": 1351.907,
+        "p50_ms": 66.672,
+        "p95_ms": 77.161,
+        "p99_ms": 84.931,
+        "tokens_per_sec": 14.765,
+        "peak_rss_gb": 1.329
+      }
+    },
+    "high-throughput-batch": {
+      "description": "Offline batch / RAG embedding: maximize tokens generated per second.",
+      "objectives": {
+        "tokens_per_sec": "max"
+      },
+      "config": {
+        "precision": "fp16",
+        "threads": 2,
+        "batch": 1,
+        "affinity": "none",
+        "model": "models/qwen2-fp16.ecm"
+      },
+      "metrics": {
+        "avg_token_ms": 67.729,
+        "ttft_avg_ms": 1351.907,
+        "p50_ms": 66.672,
+        "p95_ms": 77.161,
+        "p99_ms": 84.931,
+        "tokens_per_sec": 14.765,
+        "peak_rss_gb": 1.329
+      }
+    },
+    "low-memory-edge": {
+      "description": "Memory-constrained edge device: minimize peak resident set.",
+      "objectives": {
+        "peak_rss_gb": "min"
+      },
+      "config": {
+        "precision": "fp16",
+        "threads": 2,
+        "batch": 1,
+        "affinity": "none",
+        "model": "models/qwen2-fp16.ecm"
+      },
+      "metrics": {
+        "avg_token_ms": 67.729,
+        "ttft_avg_ms": 1351.907,
+        "p50_ms": 66.672,
+        "p95_ms": 77.161,
+        "p99_ms": 84.931,
+        "tokens_per_sec": 14.765,
+        "peak_rss_gb": 1.329
+      }
+    },
+    "balanced": {
+      "description": "General-purpose server: best compromise across all objectives.",
+      "objectives": {
+        "avg_token_ms": "min",
+        "tokens_per_sec": "max",
+        "peak_rss_gb": "min",
+        "ttft_avg_ms": "min"
+      },
+      "config": {
+        "precision": "fp16",
+        "threads": 2,
+        "batch": 1,
+        "affinity": "none",
+        "model": "models/qwen2-fp16.ecm"
+      },
+      "metrics": {
+        "avg_token_ms": 67.729,
+        "ttft_avg_ms": 1351.907,
+        "p50_ms": 66.672,
+        "p95_ms": 77.161,
+        "p99_ms": 84.931,
+        "tokens_per_sec": 14.765,
+        "peak_rss_gb": 1.329
+      }
+    }
+  },
+  "bounds": {
+    "avg_token_ms": [
+      67.729,
+      174.249
+    ],
+    "ttft_avg_ms": [
+      1351.907,
+      2451.621
+    ],
+    "p50_ms": [
+      66.672,
+      140.638
+    ],
+    "p95_ms": [
+      77.161,
+      385.264
+    ],
+    "p99_ms": [
+      84.931,
+      631.511
+    ],
+    "tokens_per_sec": [
+      5.739,
+      14.765
+    ],
+    "peak_rss_gb": [
+      1.329,
+      1.329
+    ]
+  }
+}

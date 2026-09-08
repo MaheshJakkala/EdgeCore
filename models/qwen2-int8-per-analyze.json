@@ -1,0 +1,52 @@
+{
+  "model_name": "qwen2",
+  "artifact": "models/qwen2-int8-per.ecm",
+  "file_bytes": 636661641,
+  "architecture": "qwen2",
+  "n_layer": 24,
+  "n_head": 14,
+  "n_embd": 896,
+  "head_dim": 64,
+  "n_ctx": 32768,
+  "vocab": 151936,
+  "eps": 1e-06,
+  "precision": "int8",
+  "tensor_count": 388,
+  "text_blob_bytes": 5163266,
+  "bytes_by_dtype": {
+    "fp16": 272269312,
+    "fp32": 1392128,
+    "int8": 357826560
+  },
+  "weight_bytes": 841030144,
+  "weight_mb": 802.06884765625,
+  "params_total": 493961216,
+  "params_breakdown": {
+    "embeddings": 136134656,
+    "layernorms": 43904,
+    "transformer_layers": 357826560,
+    "recomputed_total": 494005120
+  },
+  "memory": {
+    "kv_cache_bytes": 402653184,
+    "kv_cache_mb": 384.0,
+    "kv_cache_mb_per_seq": 384.0,
+    "activation_ws_bytes": 6912344064,
+    "estimated_peak_mb": 7778.19384765625
+  },
+  "operators": {
+    "gemm": 169,
+    "layernorm": 49,
+    "activation": 24,
+    "residual_add": 48,
+    "attention_blocks": 24
+  },
+  "flops": {
+    "decode_per_token": 3806494720,
+    "prefill_per_token": 987922432,
+    "prefill_128_tokens": 126454071296
+  },
+  "estimated": {
+    "int8_speedup_hint": 1.275
+  }
+}

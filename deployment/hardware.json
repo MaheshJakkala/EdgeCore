@@ -1,0 +1,8 @@
+{
+  "cpu_model": "11th Gen Intel(R) Core(TM) i3-1115G4 @ 3.00GHz",
+  "physical_cores": 2,
+  "logical_cores": 4,
+  "ram_gb": 8.1,
+  "simd": ["sse", "sse2", "sse4.1", "sse4.2", "fma", "f16c", "avx", "avx2", "avx512f", "avx512bw"],
+  "architecture": "x86_64"
+}

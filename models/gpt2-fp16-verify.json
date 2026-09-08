@@ -1,0 +1,133 @@
+{
+  "tool": "edgecore.verify",
+  "version": "0.1.0",
+  "runtime": "build/edgecore-runtime",
+  "hf_dir": "models/downloads/gpt2",
+  "thresholds": {
+    "cosine": 0.99,
+    "top1": 0.95,
+    "ppl_ratio": 1.05
+  },
+  "strict": false,
+  "overall": "pass",
+  "failed_models": [],
+  "models": {
+    "models/gpt2-fp16.ecm": {
+      "model_name": "gpt2",
+      "precision": "fp16",
+      "primary_reference": "hf",
+      "n_ctx": 1024,
+      "lengths": {
+        "4": {
+          "n_tokens": 4,
+          "runtime_tokens_head": [
+            51,
+            71,
+            68,
+            220
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999998807907104,
+              "top1": 1.0,
+              "ppl_runtime": 6048.913461241074,
+              "ppl_reference": 6048.736507685642,
+              "ppl_ratio": 1.000029254631146
+            },
+            "hf": {
+              "cosine_mean": 0.9999998807907104,
+              "cosine_min": 0.9999998211860657,
+              "top1": 1.0,
+              "ppl_runtime": 6048.913461241074,
+              "ppl_reference": 6048.223747162057,
+              "ppl_ratio": 1.0001140358075113
+            }
+          },
+          "primary": "hf",
+          "pass": true
+        },
+        "16": {
+          "n_tokens": 16,
+          "runtime_tokens_head": [
+            51,
+            71,
+            68,
+            220,
+            81,
+            64,
+            79,
+            72
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999998807907104,
+              "top1": 1.0,
+              "ppl_runtime": 1668.0182899687363,
+              "ppl_reference": 1668.0013576898134,
+              "ppl_ratio": 1.000010151238094
+            },
+            "hf": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999998211860657,
+              "top1": 1.0,
+              "ppl_runtime": 1668.0182899687363,
+              "ppl_reference": 1668.4948576820545,
+              "ppl_ratio": 0.9997143726807883
+            }
+          },
+          "primary": "hf",
+          "pass": true
+        },
+        "64": {
+          "n_tokens": 64,
+          "runtime_tokens_head": [
+            51,
+            71,
+            68,
+            220,
+            81,
+            64,
+            79,
+            72
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999998211860657,
+              "top1": 1.0,
+              "ppl_runtime": 368.5387955313868,
+              "ppl_reference": 368.5269403013989,
+              "ppl_ratio": 1.0000321692356555
+            },
+            "hf": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999998211860657,
+              "top1": 1.0,
+              "ppl_runtime": 368.5387955313868,
+              "ppl_reference": 368.5201976542349,
+              "ppl_ratio": 1.0000504663713694
+            }
+          },
+          "primary": "hf",
+          "pass": true
+        }
+      },
+      "summary": {
+        "worst_cosine_mean": 0.9999998807907104,
+        "worst_cosine_min": 0.9999998211860657,
+        "worst_top1": 1.0,
+        "max_ppl_ratio": 1.0001140358075113,
+        "pass": true
+      },
+      "tokenizer": {
+        "checked": true,
+        "agreement": 0.0,
+        "python_n": 62,
+        "c_n": 11,
+        "detail": "token count mismatch"
+      }
+    }
+  }
+}

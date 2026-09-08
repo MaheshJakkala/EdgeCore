@@ -1,0 +1,6 @@
+# EdgeCore Python toolchain dependencies.
+#
+# regex is intentionally NOT declared: the Python tokenizer must use the
+# fallback byte-classification scanner (tokenizer.py:tokenizer._pretokenize_fallback)
+# so that Python tokenization matches the C runtime's tokenizer.c.
+numpy>=1.24

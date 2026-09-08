@@ -1,0 +1,153 @@
+{
+  "hardware": {
+    "cpu_model": "11th Gen Intel(R) Core(TM) i3-1115G4 @ 3.00GHz",
+    "physical_cores": 2,
+    "logical_cores": 4,
+    "ram_gb": 8.1
+  },
+  "candidates": [
+    {
+      "model": "models/qwen2-fp16.ecm",
+      "precision": "FP16",
+      "threads": 1,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 108.278,
+      "ttft_avg_ms": 2451.621,
+      "tokens_per_sec": 9.235,
+      "peak_rss_gb": 1.329,
+      "p95_ms": 128.662,
+      "verification": {
+        "cosine_mean": 0.9999951720237732,
+        "cosine_min": 0.9999535083770752,
+        "top1": 1.0,
+        "ppl_ratio": 1.0017722416195103,
+        "status": "PASS"
+      },
+      "decision": "ACCEPT"
+    },
+    {
+      "model": "models/qwen2-fp16.ecm",
+      "precision": "FP16",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 67.729,
+      "ttft_avg_ms": 1351.907,
+      "tokens_per_sec": 14.765,
+      "peak_rss_gb": 1.329,
+      "p95_ms": 77.161,
+      "verification": {
+        "cosine_mean": 0.9999951720237732,
+        "cosine_min": 0.9999535083770752,
+        "top1": 1.0,
+        "ppl_ratio": 1.0017722416195103,
+        "status": "PASS"
+      },
+      "decision": "ACCEPT"
+    },
+    {
+      "model": "models/qwen2-fp16.ecm",
+      "precision": "FP16",
+      "threads": 4,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 174.249,
+      "ttft_avg_ms": 2167.851,
+      "tokens_per_sec": 5.739,
+      "peak_rss_gb": 1.329,
+      "p95_ms": 385.264,
+      "verification": {
+        "cosine_mean": 0.9999951720237732,
+        "cosine_min": 0.9999535083770752,
+        "top1": 1.0,
+        "ppl_ratio": 1.0017722416195103,
+        "status": "PASS"
+      },
+      "decision": "ACCEPT"
+    },
+    {
+      "model": "models/qwen2-int8-per.ecm",
+      "precision": "INT8",
+      "threads": 1,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 62.073,
+      "ttft_avg_ms": 1301.561,
+      "tokens_per_sec": 16.11,
+      "peak_rss_gb": 0.997,
+      "p95_ms": 68.452,
+      "verification": {
+        "cosine_mean": 0.9829967021942139,
+        "cosine_min": 0.9004848599433899,
+        "top1": 0.5625,
+        "ppl_ratio": 1.0011530121735601,
+        "status": "FAIL"
+      },
+      "decision": "REJECT"
+    },
+    {
+      "model": "models/qwen2-int8-per.ecm",
+      "precision": "INT8",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 50.588,
+      "ttft_avg_ms": 744.613,
+      "tokens_per_sec": 19.768,
+      "peak_rss_gb": 0.997,
+      "p95_ms": 114.255,
+      "verification": {
+        "cosine_mean": 0.9829967021942139,
+        "cosine_min": 0.9004848599433899,
+        "top1": 0.5625,
+        "ppl_ratio": 1.0011530121735601,
+        "status": "FAIL"
+      },
+      "decision": "REJECT"
+    },
+    {
+      "model": "models/qwen2-int8-per.ecm",
+      "precision": "INT8",
+      "threads": 4,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 65.972,
+      "ttft_avg_ms": 815.336,
+      "tokens_per_sec": 15.158,
+      "peak_rss_gb": 0.997,
+      "p95_ms": 93.521,
+      "verification": {
+        "cosine_mean": 0.9829967021942139,
+        "cosine_min": 0.9004848599433899,
+        "top1": 0.5625,
+        "ppl_ratio": 1.0011530121735601,
+        "status": "FAIL"
+      },
+      "decision": "REJECT"
+    }
+  ],
+  "recommended_configuration": {
+    "precision": "FP16",
+    "threads": 2,
+    "batch": 1,
+    "affinity": "none",
+    "model": "models/qwen2-fp16.ecm",
+    "metrics": {
+      "avg_token_ms": 67.729,
+      "ttft_avg_ms": 1351.907,
+      "p50_ms": 66.672,
+      "p95_ms": 77.161,
+      "p99_ms": 84.931,
+      "tokens_per_sec": 14.765,
+      "peak_rss_gb": 1.329
+    },
+    "accuracy_delta": {
+      "cosine_mean": 0.9999951720237732,
+      "top1": 1.0,
+      "ppl_ratio": 1.0017722416195103
+    },
+    "status": "VERIFIED"
+  },
+  "summary_table": "Candidate             Speed       RAM       Accuracy       Decision\n--------------------------------------------------------------------\nFP16 / 1 thread       9.2 tok/s   1.33 GB   PASS           ACCEPT\nFP16 / 2 threads      14.8 tok/s  1.33 GB   PASS           ACCEPT\nFP16 / 4 threads      5.7 tok/s   1.33 GB   PASS           ACCEPT\nINT8 / 1 thread       16.1 tok/s  1.00 GB   FAIL           REJECT\nINT8 / 2 threads      19.8 tok/s  1.00 GB   FAIL           REJECT\nINT8 / 4 threads      15.2 tok/s  1.00 GB   FAIL           REJECT"
+}

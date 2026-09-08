@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "opencode-zen": {
+      "options": {
+        "timeout": 900000,
+        "chunkTimeout": 900000
+      }
+    }
+  }
+}

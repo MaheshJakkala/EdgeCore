@@ -1,0 +1,10 @@
+{
+  "precision": "fp16",
+  "threads": 2,
+  "batch": 1,
+  "affinity": "none",
+  "max_context": 2048,
+  "n_tokens": 32,
+  "temperature": 0.0,
+  "top_k": 0
+}

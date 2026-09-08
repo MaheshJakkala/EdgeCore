@@ -1,0 +1,109 @@
+{
+  "tool": "edgecore.verify",
+  "version": "0.1.0",
+  "runtime": "build/edgecore-runtime",
+  "hf_dir": "models/downloads/qwen2.5-0.5b",
+  "truth_ecm": "models/qwen2-fp16.ecm",
+  "thresholds": {
+    "cosine": 0.99,
+    "top1": 0.95,
+    "ppl_ratio": 1.05
+  },
+  "strict": false,
+  "overall": "pass",
+  "failed_models": [],
+  "models": {
+    "models/qwen2-fp16.ecm": {
+      "model_name": "qwen2",
+      "precision": "fp16",
+      "primary_reference": "truth",
+      "n_ctx": 32768,
+      "lengths": {
+        "4": {
+          "n_tokens": 4,
+          "runtime_tokens_head": [
+            785,
+            11048,
+            24376,
+            315
+          ],
+          "comparisons": {
+            "truth": {
+              "cosine_mean": 0.9999974966049194,
+              "cosine_min": 0.9999924898147583,
+              "top1": 1.0,
+              "ppl_runtime": 1365586.3167137476,
+              "ppl_reference": 1370427.3774407709,
+              "ppl_ratio": 0.9964674810159851
+            }
+          },
+          "primary": "truth",
+          "pass": true
+        },
+        "16": {
+          "n_tokens": 16,
+          "runtime_tokens_head": [
+            785,
+            11048,
+            24376,
+            315,
+            2613,
+            4128,
+            4119,
+            702
+          ],
+          "comparisons": {
+            "truth": {
+              "cosine_mean": 0.9999984502792358,
+              "cosine_min": 0.9999926090240479,
+              "top1": 1.0,
+              "ppl_runtime": 2285916.9408258363,
+              "ppl_reference": 2289126.8816797906,
+              "ppl_ratio": 0.9985977444589709
+            }
+          },
+          "primary": "truth",
+          "pass": true
+        },
+        "64": {
+          "n_tokens": 64,
+          "runtime_tokens_head": [
+            785,
+            11048,
+            24376,
+            315,
+            2613,
+            4128,
+            4119,
+            702
+          ],
+          "comparisons": {
+            "truth": {
+              "cosine_mean": 0.9999986886978149,
+              "cosine_min": 0.9999926090240479,
+              "top1": 1.0,
+              "ppl_runtime": 9155669.360150801,
+              "ppl_reference": 9156624.727329833,
+              "ppl_ratio": 0.9998956638272856
+            }
+          },
+          "primary": "truth",
+          "pass": true
+        }
+      },
+      "summary": {
+        "worst_cosine_mean": 0.9999974966049194,
+        "worst_cosine_min": 0.9999924898147583,
+        "worst_top1": 1.0,
+        "max_ppl_ratio": 0.9998956638272856,
+        "pass": true
+      },
+      "tokenizer": {
+        "checked": true,
+        "agreement": 1.0,
+        "python_n": 10,
+        "c_n": 10
+      }
+    }
+  }
+}

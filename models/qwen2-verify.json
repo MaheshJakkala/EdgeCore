@@ -1,0 +1,198 @@
+{
+  "tool": "edgecore.verify",
+  "version": "0.1.0",
+  "runtime": "build/edgecore-runtime",
+  "hf_dir": null,
+  "thresholds": {
+    "cosine": 0.99,
+    "top1": 0.95,
+    "ppl_ratio": 1.05
+  },
+  "strict": false,
+  "overall": "fail",
+  "failed_models": [
+    "models/qwen2-int8-per.ecm"
+  ],
+  "models": {
+    "models/qwen2-int8-per.ecm": {
+      "model_name": "qwen2",
+      "precision": "int8",
+      "primary_reference": "ecm",
+      "n_ctx": 32768,
+      "lengths": {
+        "4": {
+          "n_tokens": 4,
+          "runtime_tokens_head": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 0.9997231960296631,
+              "cosine_min": 0.9991874694824219,
+              "top1": 1.0,
+              "ppl_runtime": 113734068.8203831,
+              "ppl_reference": 112365614.55728453,
+              "ppl_ratio": 1.0121785856686694
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        },
+        "8": {
+          "n_tokens": 8,
+          "runtime_tokens_head": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 0.9851863384246826,
+              "cosine_min": 0.9557133913040161,
+              "top1": 0.875,
+              "ppl_runtime": 38479466.29786888,
+              "ppl_reference": 38765375.49511643,
+              "ppl_ratio": 0.9926246245884148
+            }
+          },
+          "primary": "ecm",
+          "pass": false
+        },
+        "16": {
+          "n_tokens": 16,
+          "runtime_tokens_head": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 0.9662685394287109,
+              "cosine_min": 0.9117969274520874,
+              "top1": 0.6875,
+              "ppl_runtime": 180767366.97314197,
+              "ppl_reference": 165890766.28186128,
+              "ppl_ratio": 1.0896770870658599
+            }
+          },
+          "primary": "ecm",
+          "pass": false
+        }
+      },
+      "summary": {
+        "worst_cosine_mean": 0.9662685394287109,
+        "worst_cosine_min": 0.9117969274520874,
+        "worst_top1": 0.6875,
+        "max_ppl_ratio": 1.0896770870658599,
+        "pass": false
+      },
+      "tokenizer": {
+        "checked": false,
+        "reason": "disabled"
+      }
+    },
+    "models/qwen2-fp16.ecm": {
+      "model_name": "qwen2",
+      "precision": "fp16",
+      "primary_reference": "ecm",
+      "n_ctx": 32768,
+      "lengths": {
+        "4": {
+          "n_tokens": 4,
+          "runtime_tokens_head": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 0.9999999403953552,
+              "cosine_min": 0.9999998807907104,
+              "top1": 1.0,
+              "ppl_runtime": 10382840.759781057,
+              "ppl_reference": 10382738.837275386,
+              "ppl_ratio": 1.0000098165336977
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        },
+        "8": {
+          "n_tokens": 8,
+          "runtime_tokens_head": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 0.9999998807907104,
+              "cosine_min": 0.9999997019767761,
+              "top1": 1.0,
+              "ppl_runtime": 39892912.079459004,
+              "ppl_reference": 39891620.901427105,
+              "ppl_ratio": 1.0000323671488578
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        },
+        "16": {
+          "n_tokens": 16,
+          "runtime_tokens_head": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 0.9999998211860657,
+              "cosine_min": 0.9999995827674866,
+              "top1": 1.0,
+              "ppl_runtime": 189885779.382725,
+              "ppl_reference": 189894469.1679257,
+              "ppl_ratio": 0.9999542388715229
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        }
+      },
+      "summary": {
+        "worst_cosine_mean": 0.9999998211860657,
+        "worst_cosine_min": 0.9999995827674866,
+        "worst_top1": 1.0,
+        "max_ppl_ratio": 1.0000323671488578,
+        "pass": true
+      },
+      "tokenizer": {
+        "checked": false,
+        "reason": "disabled"
+      }
+    }
+  }
+}

@@ -1,0 +1,298 @@
+{
+  "hardware": {
+    "cpu_model": "Intel(R) Xeon(R) Processor @ 2.50GHz",
+    "physical_cores": 2,
+    "logical_cores": 2,
+    "ram_gb": 8.35,
+    "simd": "sse sse2 sse4.1 sse4.2 fma f16c avx avx2 avx512f avx512bw"
+  },
+  "bench_config": {
+    "prompt_len_tokens": 27,
+    "prompt": "The rapid adoption of small language models has created a need for efficient deployment on diverse computing environments such as commodity CPUs, on-premise servers and edge devices.",
+    "n_tokens": 16,
+    "warmup": 1,
+    "iters": 3
+  },
+  "grid_size": 8,
+  "measurements": [
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 1,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 35.184,
+      "ttft_avg_ms": 773.441,
+      "p50_ms": 34.35,
+      "p95_ms": 37.643,
+      "p99_ms": 48.505,
+      "tokens_per_sec": 28.422,
+      "peak_rss_gb": 0.279,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 1,
+      "batch": 1,
+      "affinity": "physical",
+      "avg_token_ms": 34.767,
+      "ttft_avg_ms": 800.845,
+      "p50_ms": 34.115,
+      "p95_ms": 41.827,
+      "p99_ms": 44.177,
+      "tokens_per_sec": 28.763,
+      "peak_rss_gb": 0.279,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 1,
+      "batch": 2,
+      "affinity": "none",
+      "avg_token_ms": 59.721,
+      "ttft_avg_ms": 779.134,
+      "p50_ms": 57.08,
+      "p95_ms": 73.353,
+      "p99_ms": 89.117,
+      "tokens_per_sec": 16.744,
+      "peak_rss_gb": 0.314,
+      "n_generated_tokens": 32,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 1,
+      "batch": 2,
+      "affinity": "physical",
+      "avg_token_ms": 57.555,
+      "ttft_avg_ms": 761.972,
+      "p50_ms": 57.109,
+      "p95_ms": 61.395,
+      "p99_ms": 67.653,
+      "tokens_per_sec": 17.375,
+      "peak_rss_gb": 0.314,
+      "n_generated_tokens": 32,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "none",
+      "avg_token_ms": 20.035,
+      "ttft_avg_ms": 443.549,
+      "p50_ms": 19.019,
+      "p95_ms": 28.6,
+      "p99_ms": 35.688,
+      "tokens_per_sec": 49.913,
+      "peak_rss_gb": 0.279,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "physical",
+      "avg_token_ms": 19.151,
+      "ttft_avg_ms": 431.886,
+      "p50_ms": 18.88,
+      "p95_ms": 20.441,
+      "p99_ms": 27.312,
+      "tokens_per_sec": 52.218,
+      "peak_rss_gb": 0.279,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 2,
+      "affinity": "none",
+      "avg_token_ms": 32.699,
+      "ttft_avg_ms": 439.829,
+      "p50_ms": 32.004,
+      "p95_ms": 38.997,
+      "p99_ms": 39.98,
+      "tokens_per_sec": 30.582,
+      "peak_rss_gb": 0.314,
+      "n_generated_tokens": 32,
+      "iterations": 3
+    },
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 2,
+      "affinity": "physical",
+      "avg_token_ms": 32.568,
+      "ttft_avg_ms": 437.891,
+      "p50_ms": 31.936,
+      "p95_ms": 37.361,
+      "p99_ms": 42.566,
+      "tokens_per_sec": 30.705,
+      "peak_rss_gb": 0.314,
+      "n_generated_tokens": 32,
+      "iterations": 3
+    }
+  ],
+  "pareto_front": [
+    {
+      "model": "models/gpt2-fp16.ecm",
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "physical",
+      "avg_token_ms": 19.151,
+      "ttft_avg_ms": 431.886,
+      "p50_ms": 18.88,
+      "p95_ms": 20.441,
+      "p99_ms": 27.312,
+      "tokens_per_sec": 52.218,
+      "peak_rss_gb": 0.279,
+      "n_generated_tokens": 16,
+      "iterations": 3
+    }
+  ],
+  "pareto_configs": [
+    {
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "physical",
+      "model": "models/gpt2-fp16.ecm"
+    }
+  ],
+  "recommendations": {
+    "low-latency-interactive": {
+      "description": "Interactive assistant / chat: minimize per-token latency and TTFT.",
+      "objectives": {
+        "avg_token_ms": "min",
+        "ttft_avg_ms": "min"
+      },
+      "config": {
+        "precision": "fp16",
+        "threads": 2,
+        "batch": 1,
+        "affinity": "physical",
+        "model": "models/gpt2-fp16.ecm"
+      },
+      "metrics": {
+        "avg_token_ms": 19.151,
+        "ttft_avg_ms": 431.886,
+        "p50_ms": 18.88,
+        "p95_ms": 20.441,
+        "p99_ms": 27.312,
+        "tokens_per_sec": 52.218,
+        "peak_rss_gb": 0.279
+      }
+    },
+    "high-throughput-batch": {
+      "description": "Offline batch / RAG embedding: maximize tokens generated per second.",
+      "objectives": {
+        "tokens_per_sec": "max"
+      },
+      "config": {
+        "precision": "fp16",
+        "threads": 2,
+        "batch": 1,
+        "affinity": "physical",
+        "model": "models/gpt2-fp16.ecm"
+      },
+      "metrics": {
+        "avg_token_ms": 19.151,
+        "ttft_avg_ms": 431.886,
+        "p50_ms": 18.88,
+        "p95_ms": 20.441,
+        "p99_ms": 27.312,
+        "tokens_per_sec": 52.218,
+        "peak_rss_gb": 0.279
+      }
+    },
+    "low-memory-edge": {
+      "description": "Memory-constrained edge device: minimize peak resident set.",
+      "objectives": {
+        "peak_rss_gb": "min"
+      },
+      "config": {
+        "precision": "fp16",
+        "threads": 2,
+        "batch": 1,
+        "affinity": "physical",
+        "model": "models/gpt2-fp16.ecm"
+      },
+      "metrics": {
+        "avg_token_ms": 19.151,
+        "ttft_avg_ms": 431.886,
+        "p50_ms": 18.88,
+        "p95_ms": 20.441,
+        "p99_ms": 27.312,
+        "tokens_per_sec": 52.218,
+        "peak_rss_gb": 0.279
+      }
+    },
+    "balanced": {
+      "description": "General-purpose server: best compromise across all objectives.",
+      "objectives": {
+        "avg_token_ms": "min",
+        "tokens_per_sec": "max",
+        "peak_rss_gb": "min",
+        "ttft_avg_ms": "min"
+      },
+      "config": {
+        "precision": "fp16",
+        "threads": 2,
+        "batch": 1,
+        "affinity": "physical",
+        "model": "models/gpt2-fp16.ecm"
+      },
+      "metrics": {
+        "avg_token_ms": 19.151,
+        "ttft_avg_ms": 431.886,
+        "p50_ms": 18.88,
+        "p95_ms": 20.441,
+        "p99_ms": 27.312,
+        "tokens_per_sec": 52.218,
+        "peak_rss_gb": 0.279
+      }
+    }
+  },
+  "bounds": {
+    "avg_token_ms": [
+      19.151,
+      59.721
+    ],
+    "ttft_avg_ms": [
+      431.886,
+      800.845
+    ],
+    "p50_ms": [
+      18.88,
+      57.109
+    ],
+    "p95_ms": [
+      20.441,
+      73.353
+    ],
+    "p99_ms": [
+      27.312,
+      89.117
+    ],
+    "tokens_per_sec": [
+      16.744,
+      52.218
+    ],
+    "peak_rss_gb": [
+      0.279,
+      0.314
+    ]
+  }
+}

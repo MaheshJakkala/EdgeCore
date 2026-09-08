@@ -1,0 +1,32 @@
+{
+  "model": "tiny-gpt2",
+  "artifacts": {
+    "int8": "models/tiny-gpt2-int8.ecm",
+    "fp16": "models/tiny-gpt2-fp16.ecm"
+  },
+  "verification": {
+    "models/tiny-gpt2-fp16.ecm": {
+      "precision": "fp16",
+      "pass": true,
+      "cosine": 1.0,
+      "top1": 1.0,
+      "ppl_ratio": 1.0000000041993307
+    },
+    "models/tiny-gpt2-int8.ecm": {
+      "precision": "int8",
+      "pass": true,
+      "cosine": 1.0,
+      "top1": 1.0,
+      "ppl_ratio": 1.00000000728246
+    }
+  },
+  "benchmark": {
+    "recommendations": {},
+    "grid_size": 16
+  },
+  "reports": {
+    "analyze": "models/baselines/tiny-gpt2-analyze.json",
+    "verify": "models/baselines/tiny-gpt2-verify.json",
+    "bench": "models/baselines/tiny-gpt2-bench.json"
+  }
+}

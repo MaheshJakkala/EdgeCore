@@ -1,0 +1,152 @@
+{
+  "tool": "edgecore.verify",
+  "version": "0.1.0",
+  "runtime": "/workspace/build/edgecore-runtime",
+  "hf_dir": null,
+  "thresholds": {
+    "cosine": 0.99,
+    "top1": 0.95,
+    "ppl_ratio": 1.05
+  },
+  "strict": false,
+  "overall": "pass",
+  "failed_models": [],
+  "models": {
+    "models/tiny-gpt2-fp16.ecm": {
+      "model_name": "tiny-gpt2-fp16",
+      "precision": "fp16",
+      "primary_reference": "ecm",
+      "n_ctx": 64,
+      "lengths": {
+        "4": {
+          "n_tokens": 4,
+          "runtime_tokens_head": [
+            84,
+            104,
+            101,
+            114
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999999403953552,
+              "top1": 1.0,
+              "ppl_runtime": 248.99923198223203,
+              "ppl_reference": 248.99923093660192,
+              "ppl_ratio": 1.0000000041993307
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        },
+        "16": {
+          "n_tokens": 16,
+          "runtime_tokens_head": [
+            84,
+            104,
+            101,
+            114,
+            97,
+            112,
+            105,
+            100
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999997615814209,
+              "top1": 1.0,
+              "ppl_runtime": 262.61694138155303,
+              "ppl_reference": 262.6169407764363,
+              "ppl_ratio": 1.0000000023041802
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        }
+      },
+      "summary": {
+        "worst_cosine_mean": 1.0,
+        "worst_cosine_min": 0.9999997615814209,
+        "worst_top1": 1.0,
+        "max_ppl_ratio": 1.0000000041993307,
+        "pass": true
+      },
+      "tokenizer": {
+        "checked": true,
+        "agreement": 0.0,
+        "python_n": 55,
+        "c_n": 62,
+        "detail": "token count mismatch"
+      }
+    },
+    "models/tiny-gpt2-int8.ecm": {
+      "model_name": "tiny-gpt2-int8",
+      "precision": "int8",
+      "primary_reference": "ecm",
+      "n_ctx": 64,
+      "lengths": {
+        "4": {
+          "n_tokens": 4,
+          "runtime_tokens_head": [
+            84,
+            104,
+            101,
+            114
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999999403953552,
+              "top1": 1.0,
+              "ppl_runtime": 248.75971161619972,
+              "ppl_reference": 248.7597098046171,
+              "ppl_ratio": 1.00000000728246
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        },
+        "16": {
+          "n_tokens": 16,
+          "runtime_tokens_head": [
+            84,
+            104,
+            101,
+            114,
+            97,
+            112,
+            105,
+            100
+          ],
+          "comparisons": {
+            "ecm": {
+              "cosine_mean": 1.0,
+              "cosine_min": 0.9999998807907104,
+              "top1": 1.0,
+              "ppl_runtime": 262.5564984923301,
+              "ppl_reference": 262.55649869635926,
+              "ppl_ratio": 0.9999999992229133
+            }
+          },
+          "primary": "ecm",
+          "pass": true
+        }
+      },
+      "summary": {
+        "worst_cosine_mean": 1.0,
+        "worst_cosine_min": 0.9999998807907104,
+        "worst_top1": 1.0,
+        "max_ppl_ratio": 1.00000000728246,
+        "pass": true
+      },
+      "tokenizer": {
+        "checked": true,
+        "agreement": 0.0,
+        "python_n": 55,
+        "c_n": 62,
+        "detail": "token count mismatch"
+      }
+    }
+  }
+}
