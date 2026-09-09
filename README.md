@@ -1,296 +1,1095 @@
 # EdgeCore
 
-Hardware-Adaptive Runtime & Deployment Compiler for Sovereign Small Language Models (SLMs).
+### Hardware-Adaptive Runtime & Deployment Compiler for Sovereign Small Language Models
 
-EdgeCore is a **research / B.Tech Major Project** system that automatically optimizes and
-packages a small language model for *your* hardware. You give it a model plus your CPU;
-it exports the model, proves the export is correct, benchmarks a space of execution
-configurations on real hardware, picks the best one for your goal, and emits a
-reproducible offline deployment bundle.
+> **Model + Hardware + Workload + Constraints → Search → Benchmark → Verify → Deploy**
 
-> Think "auto-tuner + verification gate + packager" for on-device / on-premise /
-> air-gapped SLM inference — no manual `llama.cpp`-style knob-twiddling required.
+EdgeCore is a CPU-first inference optimization and deployment system for Small Language Models (SLMs).
+
+Instead of assuming that one runtime configuration is optimal everywhere, EdgeCore treats deployment as a **hardware- and workload-dependent optimization problem**.
+
+Given a model, target hardware, workload, and deployment constraints, EdgeCore:
+
+1. analyzes the model,
+2. profiles the target hardware,
+3. constructs candidate execution configurations,
+4. benchmarks candidates on the real machine,
+5. filters configurations against hard constraints,
+6. verifies correctness and model quality,
+7. selects a deployable configuration,
+8. produces a reproducible deployment package.
+
+The goal is not simply to make inference faster.
+
+The goal is to answer:
+
+> **"For this model, on this machine, under these constraints, what configuration should actually be deployed—and can we prove that it satisfies the requirements?"**
 
 ---
 
-## What it does
+## Why EdgeCore?
 
+Small Language Models are increasingly attractive for local, private, and resource-constrained inference.
+
+However, deployment performance is not determined by model size alone.
+
+It depends on the interaction between:
+
+```text
+Model
+  ×
+Hardware
+  ×
+Workload
+  ×
+Runtime Configuration
+  ×
+Deployment Constraints
 ```
- Model + Hardware + Workload + Constraints
-                  |
-                  v
- +--------------------------------------------------------------+
- | EdgeCore                                                      |
- |   1. export    HF safetensors -> .ecm (fp16 / int8-per)      |
- |   2. analyze   model characteristics (params, memory, FLOPs)  |
- |   3. verify    C-runtime vs fp32 ground truth (cosine/top1/ppl)|
- |   4. bench     grid search + Pareto front on real hardware     |
- |   5. package   verified config + runtime + reports -> bundle  |
- +--------------------------------------------------------------+
-                  |
-                  v
- Optimized execution config + verification report + deployment package
+
+Parameters such as quantization, threading, kernel implementation, memory layout, KV-cache behavior, and workload characteristics can significantly affect latency, throughput, memory consumption, and model quality.
+
+Traditional deployment often looks like:
+
+```text
+Engineer
+   ↓
+Choose runtime
+   ↓
+Choose quantization
+   ↓
+Choose thread count
+   ↓
+Benchmark
+   ↓
+Change configuration
+   ↓
+Benchmark again
+   ↓
+Repeat
 ```
 
-The Python toolchain (`edgecore/`) builds and validates models; the C runtime (`src/`)
-is the actual deployable inference engine (INT8/FP16 GEMM, AVX2/AVX512, OpenMP
-threading, fp16 KV cache, BPE tokenizer, arena allocation).
+EdgeCore attempts to turn that process into an explicit optimization pipeline:
+
+```text
+Model + Hardware + Workload + Constraints
+                    ↓
+              EdgeCore Search
+                    ↓
+          Real Hardware Benchmarking
+                    ↓
+          Constraint Filtering
+                    ↓
+              Verification
+                    ↓
+       Recommended Deployment Config
+                    ↓
+          Reproducible Package
+```
+
+The project is particularly motivated by CPU-first, on-premise, offline, and sovereign AI scenarios where predictable resource usage, reproducibility, and deployment constraints matter.
 
 ---
 
-## Live demo (real `make e2e` run)
+# Architecture
 
-The animation below is an actual recorded run of `make e2e` (fetch -> export -> verify
--> benchmark/autotune -> package) on an 11th-gen Intel Core i3 (4 logical cores, 8.1 GB
-RAM), showing the search grid, the accuracy gate catching a bad int8 export, and the
-automatic fallback to a verified config:
+```text
+                         ┌───────────────────────┐
+                         │      Model Artifact   │
+                         │    HF / GGUF / ...    │
+                         └───────────┬───────────┘
+                                     │
+                                     ▼
+                         ┌───────────────────────┐
+                         │     Model Analyzer    │
+                         │                       │
+                         │ • Architecture       │
+                         │ • Layers              │
+                         │ • Tensor shapes       │
+                         │ • Parameters          │
+                         │ • Attention / GQA     │
+                         │ • KV dimensions       │
+                         │ • Memory estimates    │
+                         └───────────┬───────────┘
+                                     │
+                                     │
+                         ┌───────────▼───────────┐
+                         │    Hardware Profiler  │
+                         │                       │
+                         │ • CPU                 │
+                         │ • ISA / AVX2          │
+                         │ • Cores / threads     │
+                         │ • Cache information   │
+                         │ • System memory       │
+                         └───────────┬───────────┘
+                                     │
+                                     ▼
+                 ┌─────────────────────────────────────┐
+                 │       EdgeCore Optimization         │
+                 │                                     │
+                 │ • Precision                         │
+                 │ • Kernel                            │
+                 │ • Thread count                      │
+                 │ • Batch size                        │
+                 │ • KV-cache strategy                  │
+                 │ • Memory/runtime configuration       │
+                 └──────────────────┬──────────────────┘
+                                    │
+                                    ▼
+                 ┌─────────────────────────────────────┐
+                 │          Auto-Tuning / Search        │
+                 │                                     │
+                 │ Generate → Benchmark → Rank         │
+                 │                                     │
+                 │ Multi-objective evaluation          │
+                 └──────────────────┬──────────────────┘
+                                    │
+                                    ▼
+                 ┌─────────────────────────────────────┐
+                 │         C/C++ Inference Runtime     │
+                 │                                     │
+                 │ • Qwen2 execution                   │
+                 │ • FP16 / INT8 paths                 │
+                 │ • AVX2                              │
+                 │ • SIMD kernels                      │
+                 │ • KV cache                          │
+                 │ • Arena-style memory management     │
+                 └──────────────────┬──────────────────┘
+                                    │
+                                    ▼
+                 ┌─────────────────────────────────────┐
+                 │       Verification & Evaluation      │
+                 │                                     │
+                 │ • Correctness                       │
+                 │ • Tokenizer agreement               │
+                 │ • Accuracy constraints              │
+                 │ • TTFT / TPOT                       │
+                 │ • Throughput                        │
+                 │ • P50 / P95 / P99                   │
+                 │ • Memory                            │
+                 │ • Regression checks                 │
+                 └──────────────────┬──────────────────┘
+                                    │
+                                    ▼
+                 ┌─────────────────────────────────────┐
+                 │        Deployment Packager          │
+                 │                                     │
+                 │ • Model                             │
+                 │ • Runtime                           │
+                 │ • Configuration                     │
+                 │ • Benchmark results                 │
+                 │ • Verification metadata             │
+                 │ • Manifest                          │
+                 └──────────────────┬──────────────────┘
+                                    │
+                                    ▼
+                         ┌───────────────────────┐
+                         │ Offline / On-Premise │
+                         │      Deployment      │
+                         └───────────────────────┘
+```
 
-<img src="docs/e2e-demo.svg" alt="EdgeCore e2e animated terminal replay">
-
-What happens in the demo, step by step:
-
-1. **Tiny sanity pass** — a 2-layer synthetic model is exported, verified, and benched
-   to confirm the toolchain works before touching real weights.
-2. **Fetch** — downloads `openai-community/gpt2` (124M params) from Hugging Face.
-3. **Export** — writes two artifacts: `gpt2-fp16.ecm` (lossless) and `gpt2-int8-per.ecm`
-   (per-channel 8-bit, ~40% smaller).
-4. **Verify** — the int8 artifact **FAILS** the accuracy gate
-   (`top1=0.9375`, `ppl_ratio=1.0444` vs required `>=0.95` / `<=1.05`), while fp16
-   passes cleanly. EdgeCore refuses to ship the lossy one.
-5. **Bench** — a 16-combination grid `(precision x threads x batch x affinity)` is
-   measured on the real CPU. int8 is fastest (88.7 tok/s) but unverified, so...
-6. **Package** — EdgeCore automatically falls back to the **best verified** config
-   (fp16, 2 threads, batch 1) and emits `dist/gpt2-fp16-balanced.tar.gz` with the
-   tuned config, the runtime, and all reports.
-
-Run it yourself to get numbers specific to your machine.
+This architecture follows the project's core idea: combine model analysis, hardware profiling, optimization, automatic search, measurement, verification, and reproducible deployment into one system.
 
 ---
 
-## Repository layout
+# Current Implementation
 
-| Path | Contents |
-|------|----------|
-| `edgecore/` | Python toolchain: `export`, `reference`, `tokenizer`, `analyze`, `bench`, `verify`, `package`, `ecm`, `cli` |
-| `src/` | C inference runtime, kernels, tokenizer, hardware profiler |
-| `scripts/` | model fetch, synthetic-model generator, smoke test |
-| `docs/` | this project's documentation & the animated e2e demo |
-| `build/` | compiled `edgecore-runtime` + `edgecore-hwprof` (generated by `make`) |
-| `models/` | exported `.ecm` artifacts and JSON reports |
-| `dist/` | generated deployment bundles (`<model>-<scenario>/*.tar.gz`) |
+EdgeCore is currently implemented as a **CPU-first x86/AVX2 prototype**.
+
+### Model support
+
+Current end-to-end validation focuses on:
+
+* **Qwen2.5-0.5B-Instruct**
+* Qwen2 architecture
+* Hugging Face model artifacts
+* Qwen tokenizer and chat-template verification
+* FP16 execution
+* INT8 execution paths
+
+The initial model choice follows the project's experimental scope: Qwen2.5-0.5B provides a manageable model for rapid experimentation and reproducible evaluation.
+
+### Runtime
+
+The inference runtime is implemented in C/C++ and includes:
+
+* Qwen2 forward pass
+* RMSNorm
+* RoPE
+* Grouped Query Attention
+* SwiGLU
+* KV cache
+* FP16 execution
+* INT8 execution paths
+* AVX2-oriented CPU execution
+* configurable threading
+* arena-style memory management
+
+### Toolchain
+
+```text
+edgecore/
+├── analyze.py
+├── bench.py
+├── cli.py
+├── ecm.py
+├── export.py
+├── gguf.py
+├── package.py
+├── reference.py
+├── tokenizer.py
+└── verify.py
+
+src/
+├── gpt2.c
+├── runtime_main.c
+├── kernels.c
+├── tokenizer.c
+├── hw_profiler.c
+└── edgecore.h
+
+benchmarks/
+├── common/
+├── pytorch/
+├── llamacpp/
+├── edgecore/
+└── results/
+
+models/
+scripts/
+deployment/
+```
 
 ---
 
-## Quick start
+# End-to-End Workflow
 
-### Prerequisites
+A typical EdgeCore deployment follows:
 
-- Linux/macOS with a **64-bit x86 CPU** (AVX2 or newer is used when available)
-- Python **3.10+**
-- `gcc` with OpenMP support (`libgomp`)
-- `numpy` (installed below)
-- ~2 GB free disk + internet for the one-time model download
+```text
+1. MODEL INPUT
+       ↓
+2. MODEL ANALYSIS
+       ↓
+3. HARDWARE PROFILING
+       ↓
+4. SEARCH SPACE GENERATION
+       ↓
+5. CANDIDATE BENCHMARKING
+       ↓
+6. CONSTRAINT FILTERING
+       ↓
+7. QUALITY / CORRECTNESS VERIFICATION
+       ↓
+8. BEST VALID CONFIGURATION
+       ↓
+9. DEPLOYMENT PACKAGE
+```
 
-### 1. Clone & set up
+For example:
+
+```text
+Model:
+  Qwen2.5-0.5B-Instruct
+
+Hardware:
+  Intel Core i3-1115G4
+  AVX2
+  4 logical CPUs
+  8 GB RAM
+
+Workload:
+  batch = 1
+  context = 2048
+  generation = 32 tokens
+
+Constraints:
+  RAM < 6 GB
+  P95 < 100 ms
+  accuracy loss < 1%
+```
+
+EdgeCore then evaluates candidate configurations rather than assuming that the fastest raw configuration is automatically deployable.
+
+---
+
+# A Key Design Principle: Fastest ≠ Deployable
+
+One of the most important results from the project so far is that the fastest configuration is not necessarily the correct deployment.
+
+Example:
+
+```text
+Configuration     tok/s     P95        Accuracy loss    Decision
+----------------------------------------------------------------
+FP16 / 2 threads  15.6      83.3 ms    0%               ACCEPT
+INT8 / 2 threads  24.5      44.3 ms    1.70%            REJECT
+```
+
+The INT8 configuration is substantially faster.
+
+But if the deployment requirement is:
+
+```text
+Accuracy loss < 1%
+```
+
+then deploying INT8 would be incorrect.
+
+EdgeCore therefore separates:
+
+```text
+BEST MEASURED
+```
+
+from:
+
+```text
+BEST VALID
+```
+
+A configuration must satisfy the deployment constraints before it can be packaged as a verified deployment.
+
+This distinction is now enforced by the deployment decision engine.
+
+---
+
+# Verification
+
+EdgeCore does not treat benchmarking as sufficient evidence for deployment.
+
+The verification layer checks:
+
+### Correctness
+
+* runtime output consistency
+* numerical agreement
+* reference comparisons
+
+### Tokenization
+
+Qwen tokenizer verification uses a reference tokenizer and compares token IDs directly.
+
+Current tokenizer verification covers:
+
+* vocabulary metadata
+* plain-text tokenization
+* Qwen chat-template formatting
+* exact token-ID agreement
+
+Current result:
+
+```text
+8 / 8 tokenizer verification cases passed
+Token-ID agreement: 100%
+```
+
+### Performance
+
+Candidate configurations are evaluated using measured:
+
+* TTFT
+* TPOT
+* tokens/sec
+* P50 latency
+* P95 latency
+* P99 latency
+* peak memory
+
+### Constraint verification
+
+For example:
+
+```text
+Requirement:
+  P95 < 100 ms
+  RAM < 6 GB
+  Accuracy loss < 1%
+
+Measured:
+  P95 = X ms
+  RAM = X GB
+  Accuracy loss = X%
+
+STATUS:
+  VERIFIED / NO_VALID_CONFIGURATION
+```
+
+The deployment packager is gated by this decision.
+
+A failed or `NO_VALID_CONFIGURATION` result cannot silently become a deployment package.
+
+---
+
+# Real Hardware Benchmark
+
+All performance measurements below were obtained on the development machine rather than inferred from theoretical FLOPs.
+
+### Hardware
+
+```text
+Acer TravelMate P214-53
+
+CPU:
+  Intel Core i3-1115G4
+
+ISA:
+  AVX2
+
+Logical CPUs:
+  4
+
+RAM:
+  8 GB
+
+OS:
+  Ubuntu 24.04
+```
+
+### Qwen2.5-0.5B-Instruct
+
+Workload:
+
+```text
+batch       = 1
+context     = 2048
+generation  = 32 tokens
+```
+
+Representative EdgeCore search:
+
+```text
+Precision   Threads    tok/s     P95
+------------------------------------------
+FP16        1          10.2      106.9 ms
+FP16        2          15.6       83.3 ms
+FP16        4           9.6      121.9 ms
+
+INT8        1          16.9       63.7 ms
+INT8        2          24.5       44.3 ms
+INT8        4          14.8       88.3 ms
+```
+
+With the project's constraint set:
+
+```text
+P95 < 100 ms
+RAM < 6 GB
+Accuracy loss < 1%
+```
+
+EdgeCore selected:
+
+```text
+Precision: FP16
+Threads:   2
+Batch:     1
+
+STATUS: VERIFIED
+```
+
+The interesting hardware result is that **more threads were not always faster**.
+
+On this CPU, 2 threads outperformed 4 threads for this workload, demonstrating why runtime configuration cannot safely be hard-coded from core count alone.
+
+---
+
+# Baseline Comparison
+
+EdgeCore is evaluated against real inference baselines rather than only synthetic or weak comparisons.
+
+The current comparison includes:
+
+* PyTorch CPU
+* llama.cpp
+* EdgeCore
+
+Representative measurements:
+
+```text
+Runtime      Threads    tok/s     P95
+-------------------------------------------
+PyTorch      1           1.2      536.2 ms
+PyTorch      2           1.1      589.9 ms
+PyTorch      4           0.9     1721.3 ms
+
+llama.cpp    1          11.9       84.7 ms
+llama.cpp    2          11.9       86.6 ms
+llama.cpp    4          11.7       90.7 ms
+
+EdgeCore     1           5.4      107.8 ms
+EdgeCore     2           8.1      101.5 ms
+EdgeCore     4           5.7      247.6 ms
+```
+
+### What this tells us
+
+EdgeCore is already substantially faster than the PyTorch CPU baseline on this workload.
+
+However:
+
+> **EdgeCore does not currently beat llama.cpp.**
+
+That is an intentional and important finding, not something hidden by the project.
+
+The current performance gap is one of the primary motivations for the next optimization phase.
+
+---
+
+# Project Post-Mortem
+
+## What went wrong
+
+Building a complete inference/deployment pipeline exposed several problems that were not obvious from the initial architecture.
+
+### 1. Chat-template mismatch
+
+The first Qwen2.5-0.5B-Instruct generation tests produced incorrect-looking output.
+
+The underlying issue was not simply the model runtime.
+
+The instruct model expects prompts formatted according to its chat template.
+
+Passing raw user text directly into the model produced a mismatch between the expected prompt representation and the actual token sequence.
+
+### Lesson
+
+For instruction-tuned models:
+
+```text
+Model correctness
+        ≠
+Forward-pass correctness alone
+```
+
+The tokenizer, special tokens, chat template, and runtime must agree.
+
+This led to the tokenizer verification system that now compares EdgeCore token IDs against a reference tokenizer.
+
+---
+
+## 2. Initial benchmark measurement was misleading
+
+The first llama.cpp comparison produced suspicious results, including:
+
+* unrealistically low P95 latency
+* incorrect memory numbers
+* TTFT/TPOT values that were not directly comparable
+
+Investigation showed that parts of the benchmark were measuring different execution boundaries.
+
+For example, llama.cpp TTFT and TPOT were initially derived from separate runs, while total throughput included model loading.
+
+### Lesson
+
+Benchmarking inference systems is itself a systems problem.
+
+Metrics are only meaningful when:
+
+```text
+measurement boundary
++
+warm/cold state
++
+process lifetime
++
+token count
++
+memory accounting
+```
+
+are explicitly defined.
+
+The benchmark harness was subsequently corrected and methodology was documented rather than hiding the original result.
+
+---
+
+## 3. Fastest configuration failed quality requirements
+
+INT8 produced a significant performance improvement.
+
+But the measured accuracy degradation exceeded the deployment requirement:
+
+```text
+INT8 accuracy loss ≈ 1.70%
+
+Required:
+accuracy loss < 1%
+```
+
+Therefore:
+
+```text
+FASTER
+```
+
+did not mean:
+
+```text
+DEPLOYABLE
+```
+
+### Lesson
+
+Optimization must be constraint-aware.
+
+A deployment compiler should not optimize a metric while silently violating another requirement.
+
+---
+
+## 4. "More CPU threads" did not guarantee better performance
+
+The experiments showed:
+
+```text
+2 threads > 4 threads
+```
+
+for the tested workload.
+
+This reinforced the central hypothesis of EdgeCore:
+
+> Hardware characteristics provide useful search boundaries, but empirical measurement is still required to select the final configuration.
+
+---
+
+## 5. A technically valid result can still be operationally invalid
+
+At one stage, EdgeCore produced an apparent "accepted" result around:
+
+```text
+P95 ≈ 101.5 ms
+```
+
+while the target requirement was:
+
+```text
+P95 < 100 ms
+```
+
+The decision logic was later tightened so that constraints are evaluated explicitly rather than inferred from ranking.
+
+The correct outcome became:
+
+```text
+NO_VALID_CONFIGURATION
+```
+
+when no candidate satisfies the hard constraints.
+
+### Lesson
+
+A deployment system must be conservative at the final gate.
+
+It is better to say:
+
+```text
+NO_VALID_CONFIGURATION
+```
+
+than to produce a package that violates the stated requirements.
+
+---
+
+# What I Learned
+
+The most important lessons from building EdgeCore were not specific to one model or one kernel.
+
+### Systems lesson
+
+Inference performance emerges from interactions between:
+
+```text
+model architecture
+hardware
+memory hierarchy
+precision
+kernels
+threading
+workload
+runtime configuration
+```
+
+### Measurement lesson
+
+A benchmark is only useful when its measurement methodology is explicit and reproducible.
+
+### ML systems lesson
+
+Quantization is not automatically an optimization.
+
+It is an optimization only if:
+
+```text
+performance gain
++
+acceptable quality
++
+resource constraints
+```
+
+are all satisfied.
+
+### Compiler/runtime lesson
+
+The interesting problem is not:
+
+> "How do I make this kernel faster?"
+
+It is:
+
+> "How do I systematically discover the best execution strategy for this model on this machine under a real deployment objective?"
+
+That is the problem EdgeCore is designed around.
+
+---
+
+# Current Status
+
+### Completed
+
+* [x] Model analysis pipeline
+* [x] Hardware profiling
+* [x] Qwen2.5-0.5B end-to-end support
+* [x] Qwen2 architecture execution
+* [x] FP16 execution
+* [x] INT8 execution path
+* [x] AVX2 CPU execution
+* [x] Configurable threading
+* [x] Benchmark harness
+* [x] PyTorch comparison
+* [x] llama.cpp comparison
+* [x] Qwen tokenizer verification
+* [x] Chat-template verification
+* [x] Automatic configuration decision engine
+* [x] Explicit constraint filtering
+* [x] `NO_VALID_CONFIGURATION` state
+* [x] Deployment package gating
+* [x] Verification metadata
+* [x] Reproducible deployment artifacts
+
+### In progress
+
+* [ ] Improve EdgeCore runtime performance
+* [ ] Profile operator-level bottlenecks
+* [ ] Optimize critical kernels
+* [ ] Improve auto-tuning/search efficiency
+* [ ] Reduce gap to mature CPU inference runtimes
+* [ ] Expand Pareto-style configuration selection
+
+---
+
+# Upgrade Roadmap
+
+## Upgrade 1 — End-to-End Qwen Deployment
+
+Completed.
+
+Demonstrated:
+
+```text
+Model
+ ↓
+Analysis
+ ↓
+Hardware profile
+ ↓
+Configuration search
+ ↓
+Benchmark
+ ↓
+Verification
+ ↓
+Deployment package
+```
+
+---
+
+## Upgrade 2 — Real Runtime Comparison
+
+Completed.
+
+Added controlled comparisons against:
+
+```text
+PyTorch CPU
+llama.cpp
+EdgeCore
+```
+
+This established a realistic performance baseline.
+
+---
+
+## Upgrade 3 — Verification & Deployment Gating
+
+Completed.
+
+Added:
+
+```text
+Tokenizer verification
+        +
+Chat-template verification
+        +
+Constraint engine
+        +
+Deployment gating
+```
+
+The system now distinguishes:
+
+```text
+BEST MEASURED
+```
+
+from:
+
+```text
+BEST VALID
+```
+
+and blocks deployment when no valid configuration exists.
+
+---
+
+## Upgrade 4 — Performance Optimization & Auto-Tuning
+
+Next major focus.
+
+The objective is not to optimize blindly.
+
+The process will be:
+
+```text
+Profile
+  ↓
+Identify hotspots
+  ↓
+Optimize critical path
+  ↓
+Benchmark
+  ↓
+Verify correctness
+  ↓
+Measure regression
+  ↓
+Keep / Reject optimization
+```
+
+The current gap to llama.cpp provides a concrete optimization target.
+
+Priority areas include:
+
+* matrix/vector kernels
+* memory movement
+* cache behavior
+* RMSNorm
+* attention path
+* KV-cache access
+* SwiGLU
+* output projection
+* threading overhead
+* tensor layouts
+
+The intent is to make EdgeCore increasingly competitive while preserving its hardware-adaptive and verification-driven design.
+
+---
+
+# What EdgeCore Is — and Is Not
+
+### EdgeCore is:
+
+* a hardware-aware SLM deployment system
+* a runtime configuration search layer
+* a benchmarking-driven optimizer
+* a verification and deployment pipeline
+* a systems research prototype
+* a foundation for CPU-first sovereign/offline inference
+
+### EdgeCore is not currently:
+
+* a universal inference engine
+* a replacement for llama.cpp
+* a production enterprise deployment platform
+* a GPU inference framework
+* a multi-architecture compiler
+
+That distinction is deliberate.
+
+The current implementation focuses on **x86/AVX2** to keep experimentation measurable and reproducible. The broader architecture can later support additional backends.
+
+---
+
+# Research Direction
+
+EdgeCore is influenced by the idea of hardware-measured automatic optimization used in systems such as Ansor and TVM.
+
+The project's specific direction is to apply this philosophy to the broader deployment problem:
+
+```text
+Model
+×
+Hardware
+×
+Workload
+×
+Deployment Constraints
+```
+
+rather than optimizing a single operator or assuming a fixed runtime configuration.
+
+The intended output is therefore not simply:
+
+```text
+"this configuration is fast"
+```
+
+but:
+
+```text
+"this configuration is valid for this deployment objective,
+was measured on this hardware,
+passed the required verification checks,
+and can be reproduced from the generated deployment artifact."
+```
+
+---
+
+# Future Direction
+
+Potential future extensions include:
+
+* ARM/NEON backend
+* AVX512/VNNI optimization
+* GPU backend
+* NUMA-aware optimization
+* learned cost models
+* advanced quantization strategies
+* speculative decoding
+* model/runtime co-design
+* fleet-level deployment profiling
+* offline/air-gapped deployment management
+
+These are intentionally outside the current MVP scope.
+
+---
+
+# Reproducibility
+
+Every verified deployment is intended to carry the information necessary to understand how the decision was made.
+
+A deployment package contains artifacts such as:
+
+```text
+deployment/
+├── model/
+├── runtime/
+├── config/
+├── benchmark.json
+├── hardware.json
+├── verification.json
+└── manifest.json
+```
+
+This follows the project's objective of producing reproducible deployment artifacts suitable for constrained or offline environments.
+
+---
+
+# Quick Start
 
 ```bash
-git clone https://github.com/MaheshJakkala/EdgeCore.git
-cd EdgeCore
-pip install -r requirements.txt        # numpy
+# Build the runtime
+make
+
+# Inspect available commands
+python3 -m edgecore.cli --help
+
+# Analyze a model
+python3 -m edgecore.cli analyze ...
+
+# Export model
+python3 -m edgecore.cli export ...
+
+# Run verification
+python3 -m edgecore.cli verify ...
+
+# Run deployment workflow
+python3 -m edgecore.cli deploy-qwen ...
 ```
 
-### 2. Build the C runtime
-
-```bash
-make            # builds build/edgecore-runtime and build/edgecore-hwprof
-```
-
-### 3. Quick sanity check (tiny synthetic model, ~10 s)
-
-```bash
-make smoke
-```
-
-### 4. Full end-to-end on real GPT-2 (~3-5 min)
-
-```bash
-make e2e
-```
-
-`make e2e` runs: tiny sanity -> fetch `gpt2` -> export (fp16 + int8) -> analyze ->
-verify -> benchmark/autotune -> package. When it finishes you will have:
-
-```
-models/gpt2-fp16.ecm           models/gpt2-int8-per.ecm      # exported artifacts
-models/gpt2-*-analyze.json     models/gpt2-*-verify.json     # reports
-models/gpt2-*-bench.json       models/tiny-*.json
-dist/gpt2-<scenario>.tar.gz    dist/gpt2-<scenario>/          # deployment bundle
-```
-
-### 5. Run the packaged model
-
-```bash
-tar -xzf dist/gpt2-fp16-balanced.tar.gz
-cd gpt2-fp16-balanced
-./bin/run.sh --mode generate --prompt "Once upon a time" --n-tokens 24
-```
-
-The bundle is fully self-contained (model + runtime + tuned config + reports) and can be
-copied to an offline / on-premise machine as-is.
+See the individual scripts and benchmark directories for the exact experiment commands used to generate the reported results.
 
 ---
 
-## CLI reference
+# Why This Project Exists
 
-Everything is exposed through a single entry point:
+EdgeCore started as a B.Tech major project.
 
-```
-python -m edgecore.cli <command> [args...]
-commands: export, analyze, bench, verify, package, hw, e2e
-```
+It evolved into a systems question:
 
-| Command | What it does |
-|---------|--------------|
-| `python -m edgecore.cli hw` | Print the hardware profile (CPU, SIMD, cores, RAM) |
-| `python -m edgecore.cli export --src <hf-dir> --out models` | Export `.ecm` artifacts |
-| `python -m edgecore.cli analyze --model models/x-int8-per.ecm` | Model characteristics report |
-| `python -m edgecore.cli verify --model models/x-int8-per.ecm --model models/x-fp16.ecm --hf-dir <hf-dir> --runtime build/edgecore-runtime` | Correctness gate (cosine / top-1 / ppl) |
-| `python -m edgecore.cli bench --model models/x-int8-per.ecm --runtime build/edgecore-runtime --hwprof build/edgecore-hwprof --threads 1,2 --batch 1,2` | Grid search + Pareto + scenario recommendations |
-| `python -m edgecore.cli package --model models/x-fp16.ecm --bench-report models/x-bench.json --scenario balanced` | Build a deployment bundle |
-| `python -m edgecore.cli e2e --fetch` | Run the full pipeline (`make e2e`) |
+> **Can model deployment be treated as an automated, measurable, and verifiable optimization problem instead of a collection of manually chosen runtime parameters?**
 
-Useful `e2e` options (see `python -m edgecore.cli e2e --help`):
+The current implementation is an attempt to answer that question with a working system rather than only a design document.
 
-- `--scenario {low-latency-interactive,high-throughput-batch,low-memory-edge,balanced}`
-- `--threads 1,2,4` / `--batch 1,2` / `--affinity none,physical` — bench grid size
-- `--precisions fp16,int8` — which artifacts to export
-- `--lengths 4,16,64` — verification prompt lengths
-- `--no-package` / `--skip-verify` / `--skip-bench` / `--skip-tiny`
+The project deliberately documents both successful results and failed experiments because the failures exposed important engineering constraints around benchmarking, tokenizer correctness, quantization quality, and deployment validation.
 
-The C runtime itself is also a CLI:
+---
 
-```
-build/edgecore-runtime --model FILE --mode {generate|logits|bench} [options]
-  --precision fp16|int8|auto   --threads N   --batch N   --affinity none|physical|0,2,..
-  --prompt TEXT                --n-tokens N  --temp T    --top-k N
-  --output FILE                --logits-bin FILE
+# Status
+
+```text
+PROJECT STATUS
+
+Architecture              ████████████████████  Implemented
+Model analysis            ████████████████████  Implemented
+Hardware profiling        ████████████████████  Implemented
+Qwen2.5-0.5B runtime      ████████████████████  Implemented
+Benchmark framework       ████████████████████  Implemented
+Tokenizer verification    ████████████████████  Implemented
+Decision engine            ████████████████████  Implemented
+Deployment gating         ████████████████████  Implemented
+
+Runtime optimization     ███████████░░░░░░░░░  In progress
+Auto-tuning maturity      █████████░░░░░░░░░░░  In progress
+Multi-architecture        ██░░░░░░░░░░░░░░░░░░  Future
+Production hardening      ███░░░░░░░░░░░░░░░░░  Future
 ```
 
+**Current focus: Upgrade 4 — making the runtime faster without compromising correctness or deployment constraints.**
+
 ---
 
-## How it works (the important part)
+# Author
 
-### The verification gate
+**Mahesh Jakkala**
 
-Before anything is deployed, EdgeCore proves the artifact is correct. `verify.py` runs
-the C runtime and a numpy fp32 reference on identical token ids and compares:
+B.Tech Major Project
 
-| Metric | Meaning | Pass threshold |
-|--------|---------|----------------|
-| **cosine** | output-vector similarity to ground truth | `>= 0.99` |
-| **top-1** | fraction of next-token predictions that match ground truth | `>= 0.95` |
-| **ppl ratio** | perplexity inflation caused by quantization | `<= 1.05` |
+**EdgeCore — Hardware-Adaptive Runtime & Deployment Compiler for Sovereign Small Language Models**
 
-A quantized model that fails these is **not silently shipped**. In the real GPT-2 run,
-per-channel int8 failed top-1 (`0.9375`) — so the packager automatically chose the best
-verified config instead. The failure is recorded in the bundle's `manifest.json`
-(`verification.packaged_pass`), so downstream consumers always know the provenance.
+---
 
-> You can still package an unverified artifact if you want it (`package.py` will mark
-> `packaged_pass: false`). The gate protects the *default* path, it doesn't forbid choice.
+## Closing Note
 
-### The auto-tuner
+EdgeCore is intentionally not presented as a finished universal inference platform.
 
-`bench.py` measures a grid of configurations — `precision x threads x batch x affinity` —
-each on the real CPU, recording TTFT, TPOT, p50/p95/p99 latency, tokens/sec, and peak
-RSS. It then computes the **Pareto front** (configs not dominated on any objective) and
-maps them to deployment scenarios:
+The interesting part of the project is the direction:
 
-- **low-latency-interactive** — for chat: minimize TTFT / TPOT
-- **high-throughput-batch** — for batch jobs: maximize tokens/sec
-- **low-memory-edge** — for constrained devices: minimize peak RSS
-- **balanced** — best compromise across all objectives
-
-### The deployment bundle
-
-```
-dist/<model>-<scenario>/
-+-- model.ecm            quantized model artifact (+ sha256 in manifest)
-+-- config.json          tuned execution config from the bench report
-+-- bin/edgecore-runtime compiled C runtime
-+-- bin/run.sh           launch helper embedding the tuned config
-+-- reports/             analysis / benchmark / verification JSON
-+-- hardware.json        hardware profile of the build environment
-+-- manifest.json        provenance: git commit, versions, hashes, file manifest
+```text
+Measure
+  ↓
+Understand
+  ↓
+Optimize
+  ↓
+Verify
+  ↓
+Deploy
 ```
 
-Everything has a sha256 and the manifest records which git commit produced it —
-configuration is reproducible, not anecdotal.
+The long-term objective is to make that loop increasingly automatic and hardware-aware.
 
----
-
-## Motivation & context
-
-This is the implementation of the **EdgeCore B.Tech Major Project proposal** (Mahesh
-Jakkala, Aug 2026). It targets sovereign / enterprise AI deployments: SLMs that must
-run on commodity CPUs, on-premise servers, or air-gapped infrastructure without
-cloud dependencies and under strict latency / memory / accuracy / reproducibility
-constraints.
-
-It adapts the central idea of **Ansor** (*Generating High-Performance Tensor Programs
-for Deep Learning*, OSDI 2020) — automatically searching an optimization space with
-real hardware measurements — and applies it to the broader SLM inference + deployment
-problem, adding a **verification gate** and a **reproducible packager** on top.
-TVM (OSDI 2018) is the compiler-oriented foundation for hardware-aware optimization.
-
-### Evaluated against real baselines
-
-The aim is not to replace llama.cpp / ONNX Runtime / PyTorch, but to investigate whether
-an *additional* automatic hardware/workload-aware optimization layer can discover
-better configurations for a given deployment scenario.
-
----
-
-## Example results (build host: Intel Xeon 2 cores, AVX2/AVX512, 8.35 GB)
-
-Real `make e2e` output on GPT-2 (124M), best configs per precision:
-
-| artifact | TTFT (thr=2,b=1) | TPOT avg | tokens/s | peak RSS | verification |
-|----------|------------------|----------|----------|----------|--------------|
-| int8-per | 309 ms | 13.8 ms | 72.4 | 0.20 GB | FAIL (top1 0.9375 @ len16, ppl 1.044) |
-| fp16     | 435 ms | 19.5 ms | 51.2 | 0.28 GB | PASS (cosine 1.0, top1 1.0, ppl 1.0001) |
-
-Result: fp16 shipped for the `balanced` scenario (int8 was 1.4x faster but failed the
-accuracy gate). Your machine will produce its own Pareto front — that's the point.
-
----
-
-## Troubleshooting
-
-| Symptom | Cause & fix |
-|---------|-------------|
-| `cannot reshape array of size 0 into shape (768,2304)` during export | Corrupt/truncated `model.safetensors`. Re-download: `python3 scripts/fetch_model.py --out models/downloads/gpt2 --force` |
-| `runtime/hwprof not found` | Run `make` to build the C binaries first |
-| Everything verifies but is slow | Your CPU may lack AVX2; benchmarks still work, just slower. Try `--threads 1,2,4` and a bigger grid |
-| `make e2e` re-downloads nothing | Files already in `models/downloads/` are skipped; add `--force` to `fetch_model.py` to replace them |
-
----
-
-## Roadmap / future work
-
-- ARM / Apple Silicon kernels (NEON) and AVX512-native GEMM
-- Mixed-precision (int8 weights + fp16 activations) and int4
-- Learned cost model to prune the search grid (full Ansor-style)
-- Additional model architectures (Qwen2.5-0.5B as proposed, Llama-style)
-- Publish-website / showcase integration for the demo
-
----
-
-## License
-
-TBD — research/project code; see proposal for context. Contact the author before
-reuse outside academic evaluation.
-
----
-
-*Built for the EdgeCore B.Tech Major Project — Mahesh Jakkala, August 2026.*
+**Fast is useful.
+Fast + valid + reproducible is deployable.**
