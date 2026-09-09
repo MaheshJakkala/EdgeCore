@@ -1025,7 +1025,7 @@ See the individual scripts and benchmark directories for the exact experiment co
 
 # Why This Project Exists
 
-EdgeCore started as a B.Tech major project.
+EdgeCore started as a SLM project.
 
 It evolved into a systems question:
 
