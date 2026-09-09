@@ -111,11 +111,17 @@ def build_package(model: str | Path, bench_report: str | Path,
                   scenario: str = "balanced",
                   verify_report: str | Path | None = None,
                   analyze_report: str | Path | None = None,
+                  decision_report: str | Path | None = None,
                   runtime: str | Path | None = None,
                   hw_profile: dict[str, Any] | None = None,
                   name: str | None = None, out_dir: str | Path = "dist",
                   include_tar: bool = True) -> dict[str, Any]:
-    """Assemble the deployment bundle; returns the manifest dict."""
+    """Assemble the deployment bundle; returns the manifest dict.
+    
+    If decision_report is provided, the package will only be created if
+    the decision status is VERIFIED. This prevents deploying invalid
+    configurations (NO_VALID_CONFIGURATION or FAILED).
+    """
     model = Path(model)
     if not model.exists():
         raise FileNotFoundError(f"model not found: {model}")
@@ -128,6 +134,16 @@ def build_package(model: str | Path, bench_report: str | Path,
     rec = bench["recommendations"][scenario]
     cfg = rec["config"]
     metrics = rec.get("metrics", {})
+
+    # Check decision report if provided
+    if decision_report:
+        decision = json.loads(Path(decision_report).read_text())
+        if decision.get("status") != "VERIFIED":
+            raise ValueError(
+                f"Cannot create deployment package: decision status is "
+                f"'{decision.get('status')}', not VERIFIED. "
+                f"Deployment requires a VERIFIED decision record."
+            )
 
     runtime = runtime or default_runtime()
     runtime = Path(runtime)
@@ -218,6 +234,7 @@ exec "$DIR/bin/edgecore-runtime" \\
             "scenario_metrics": metrics,
         },
         "verification": _verification_summary(vr, model=model),
+        "deployment_decision": json.loads(Path(decision_report).read_text()) if decision_report else None,
         "files": _file_manifest(bundle_dir),
     }
     (bundle_dir / "manifest.json").write_text(json.dumps(manifest, indent=2))
@@ -289,6 +306,8 @@ def main(argv: list[str] | None = None) -> int:
                     help="optional JSON report from edgecore.verify")
     ap.add_argument("--analyze-report", default=None,
                     help="optional JSON report from edgecore.analyze")
+    ap.add_argument("--decision-report", default=None,
+                    help="optional JSON report from edgecore.decide (required for VERIFIED package)")
     ap.add_argument("--runtime", default=None, help="path to edgecore-runtime")
     ap.add_argument("--hw-profile", default=None,
                     help="optional hardware JSON (else hwprof is run)")
@@ -305,6 +324,7 @@ def main(argv: list[str] | None = None) -> int:
     manifest = build_package(
         args.model, args.bench_report, scenario=args.scenario,
         verify_report=args.verify_report, analyze_report=args.analyze_report,
+        decision_report=args.decision_report,
         runtime=Path(args.runtime) if args.runtime else None,
         hw_profile=hw_profile,
         name=args.name, out_dir=args.out, include_tar=not args.no_tar,

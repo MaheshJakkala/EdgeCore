@@ -1,0 +1,49 @@
+[
+  {
+    "name": "basic",
+    "input": "Hello world.",
+    "description": "Simple ASCII text"
+  },
+  {
+    "name": "punctuation",
+    "input": "What is 2 + 2? Explain CPU cache locality!",
+    "description": "Punctuation and numbers"
+  },
+  {
+    "name": "unicode",
+    "input": "Hello 世界 🌍 café",
+    "description": "Unicode characters"
+  },
+  {
+    "name": "empty_or_short",
+    "input": "a",
+    "description": "Single character"
+  },
+  {
+    "name": "long_text",
+    "input": "The rapid adoption of small language models has created a need for efficient deployment on diverse computing environments such as commodity CPUs, on-premise servers, edge devices and isolated or air-gapped infrastructures. Unlike conventional software workloads, small language model inference performance depends strongly on the interaction between the model architecture, hardware capabilities, memory hierarchy, instruction set support, workload characteristics and runtime configuration.",
+    "description": "Longer text"
+  },
+  {
+    "name": "system_user_assistant",
+    "input": "system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.\nuser\nExplain what a CPU cache is in simple terms.\nassistant\n",
+    "description": "Pre-formatted Qwen chat"
+  },
+  {
+    "name": "qwen_chat_template",
+    "messages": [
+      {"role": "user", "content": "Explain what a CPU cache is in simple terms."}
+    ],
+    "add_generation_prompt": true,
+    "description": "Qwen chat template with user message"
+  },
+  {
+    "name": "qwen_chat_with_system",
+    "messages": [
+      {"role": "system", "content": "You are a helpful assistant."},
+      {"role": "user", "content": "What is 2 + 2?"}
+    ],
+    "add_generation_prompt": true,
+    "description": "Qwen chat template with system and user"
+  }
+]

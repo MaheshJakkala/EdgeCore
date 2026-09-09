@@ -1,0 +1,102 @@
+{
+  "upgrade": 3,
+  "model": "Qwen2.5-0.5B-Instruct",
+  "hardware": "Intel i3-1115G4",
+  "precision": "fp16",
+  "workload": {
+    "batch": 1,
+    "context": 2048,
+    "generation_tokens": 32
+  },
+  "tokenizer_verification": {
+    "vocabulary": {
+      "hf_vocab_size": 151665,
+      "ec_vocab_size": 151665,
+      "match": true
+    },
+    "special_tokens": {
+      "match": true,
+      "count": 22
+    },
+    "tokenization_agreement": {
+      "tests_passed": 6,
+      "tests_total": 6
+    },
+    "chat_template_agreement": {
+      "tests_passed": 2,
+      "tests_total": 2
+    },
+    "overall_status": "VERIFIED"
+  },
+  "deployment_decision_strict": {
+    "constraints": {
+      "max_p95_ms": 100.0,
+      "max_accuracy_loss_percent": 1.0,
+      "max_ram_mb": 6144.0
+    },
+    "candidates_evaluated": 3,
+    "valid_candidates": 0,
+    "status": "NO_VALID_CONFIGURATION",
+    "best_measured": {
+      "precision": "fp16",
+      "threads": 2,
+      "p95_ms": 101.471,
+      "tokens_per_second": 8.065
+    }
+  },
+  "deployment_decision_relaxed": {
+    "constraints": {
+      "max_p95_ms": 110.0,
+      "max_accuracy_loss_percent": 1.0,
+      "max_ram_mb": 6144.0
+    },
+    "candidates_evaluated": 3,
+    "valid_candidates": 2,
+    "status": "VERIFIED",
+    "recommended": {
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 1,
+      "p95_ms": 101.471,
+      "tokens_per_second": 8.065
+    }
+  },
+  "package_gating": {
+    "strict_constraints": {
+      "decision_status": "NO_VALID_CONFIGURATION",
+      "package_created": false,
+      "blocked": true,
+      "reason": "decision status is 'NO_VALID_CONFIGURATION', not VERIFIED"
+    },
+    "relaxed_constraints": {
+      "decision_status": "VERIFIED",
+      "package_created": true,
+      "package_path": "dist/qwen2-fp16-balanced/"
+    }
+  },
+  "key_improvements": [
+    "Tokenizer verification against HF reference (3-tier check)",
+    "Explicit constraint filtering separate from ranking",
+    "Rejection reasons with measured vs limit",
+    "Best-measured vs Best-valid distinction",
+    "NO_VALID_CONFIGURATION status",
+    "Decision records for auditability",
+    "Package gating: only VERIFIED decisions produce packages",
+    "Complete audit trail in manifest"
+  ],
+  "pipeline_integration": [
+    "Model",
+    "Tokenizer verification (HF reference)",
+    "Hardware profiling",
+    "Candidate generation",
+    "Benchmark measurement",
+    "Correctness verification",
+    "Accuracy verification",
+    "Memory verification",
+    "Performance verification",
+    "Constraint filtering",
+    "Automatic decision",
+    "Package ONLY if VERIFIED"
+  ],
+  "timestamp": "2026-09-09T19:55:00Z"
+}

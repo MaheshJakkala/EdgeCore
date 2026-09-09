@@ -1,0 +1,1 @@
+{"max_p95_ms": {"limit": 110.0, "unit": "ms", "higher_is_better": false}, "max_accuracy_loss_percent": {"limit": 1.0, "unit": "%", "higher_is_better": false}, "max_ram_mb": {"limit": 6144.0, "unit": "MB", "higher_is_better": false}}

@@ -1,0 +1,107 @@
+{
+  "status": "NO_VALID_CONFIGURATION",
+  "constraints": {
+    "max_p95_ms": {
+      "limit": 100.0,
+      "unit": "ms",
+      "higher_is_better": false
+    },
+    "max_accuracy_loss_percent": {
+      "limit": 1.0,
+      "unit": "%",
+      "higher_is_better": false
+    },
+    "max_ram_mb": {
+      "limit": 6144.0,
+      "unit": "MB",
+      "higher_is_better": false
+    }
+  },
+  "candidates_evaluated": 3,
+  "valid_candidates": 0,
+  "best_measured": {
+    "precision": "fp16",
+    "threads": 2,
+    "batch": 1,
+    "affinity": "none",
+    "metrics": {
+      "tokens_per_second": 8.065000000000001,
+      "p95_ms": 101.471,
+      "p99_ms": 101.471,
+      "ttft_ms": 1708.2812000000001,
+      "ram_mb": 1361,
+      "accuracy_loss_percent": 0.0
+    },
+    "valid": false
+  },
+  "best_valid": null,
+  "candidates": [
+    {
+      "precision": "fp16",
+      "threads": 1,
+      "batch": 1,
+      "affinity": "none",
+      "metrics": {
+        "tokens_per_second": 5.4123,
+        "p95_ms": 107.826,
+        "p99_ms": 107.826,
+        "ttft_ms": 2670.264,
+        "ram_mb": 1361,
+        "accuracy_loss_percent": 0.0
+      },
+      "checks": {
+        "tokenizer_verified": true,
+        "correctness_verified": true
+      },
+      "valid": false,
+      "rejection_reasons": [
+        "REJECTED: max_p95_ms (107.83 ms vs limit 100.00 ms)"
+      ]
+    },
+    {
+      "precision": "fp16",
+      "threads": 2,
+      "batch": 1,
+      "affinity": "none",
+      "metrics": {
+        "tokens_per_second": 8.065000000000001,
+        "p95_ms": 101.471,
+        "p99_ms": 101.471,
+        "ttft_ms": 1708.2812000000001,
+        "ram_mb": 1361,
+        "accuracy_loss_percent": 0.0
+      },
+      "checks": {
+        "tokenizer_verified": true,
+        "correctness_verified": true
+      },
+      "valid": false,
+      "rejection_reasons": [
+        "REJECTED: max_p95_ms (101.47 ms vs limit 100.00 ms)"
+      ]
+    },
+    {
+      "precision": "fp16",
+      "threads": 4,
+      "batch": 1,
+      "affinity": "none",
+      "metrics": {
+        "tokens_per_second": 5.6770000000000005,
+        "p95_ms": 247.633,
+        "p99_ms": 247.633,
+        "ttft_ms": 1568.8209000000002,
+        "ram_mb": 1361,
+        "accuracy_loss_percent": 0.0
+      },
+      "checks": {
+        "tokenizer_verified": true,
+        "correctness_verified": true
+      },
+      "valid": false,
+      "rejection_reasons": [
+        "REJECTED: max_p95_ms (247.63 ms vs limit 100.00 ms)"
+      ]
+    }
+  ],
+  "timestamp": "2026-09-09T14:21:26.392893Z"
+}
