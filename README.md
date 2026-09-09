@@ -1065,8 +1065,6 @@ Production hardening      ███░░░░░░░░░░░░░░░
 
 **Mahesh Jakkala**
 
-B.Tech Major Project
-
 **EdgeCore — Hardware-Adaptive Runtime & Deployment Compiler for Sovereign Small Language Models**
 
 ---
