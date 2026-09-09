@@ -1,0 +1,52 @@
+{
+  "runtime": "llamacpp",
+  "model": "Qwen2.5-0.5B-Instruct",
+  "precision": "fp16",
+  "batch": 1,
+  "context": 2048,
+  "generation_tokens": 32,
+  "hardware": "Intel i3-1115G4",
+  "timestamp": "2026-09-09T10:03:37.199358Z",
+  "software": {
+    "llama_cpp": "unknown"
+  },
+  "measurement_notes": {
+    "ttft_method": "separate_single_token_run_includes_model_load",
+    "tpot_method": "total_minus_separate_ttft_div_tokens_minus_1",
+    "tok_per_sec_method": "tokens_div_total_wall_time_includes_model_load",
+    "ram_method": "peak_rss_of_llama_cli_subprocess",
+    "caveat": "TTFT includes model load; TPOT uses separate-run TTFT; tok/s includes load time; RAM is subprocess peak RSS"
+  },
+  "runs": [
+    {
+      "threads": 1,
+      "ttft_ms": 2707.3042797998824,
+      "tpot_ms": 33.84775947047247,
+      "tokens_per_second": 11.872946083798455,
+      "p50_ms": 3.9967847096704645,
+      "p95_ms": 84.68830012500916,
+      "p99_ms": 84.68830012500916,
+      "ram_mb": 1296.02734375
+    },
+    {
+      "threads": 2,
+      "ttft_ms": 2676.0896949001108,
+      "tpot_ms": 18.555893568141222,
+      "tokens_per_second": 11.850099875248848,
+      "p50_ms": 2.84877135483487,
+      "p95_ms": 86.56944781250786,
+      "p99_ms": 86.56944781250786,
+      "ram_mb": 1296.06640625
+    },
+    {
+      "threads": 4,
+      "ttft_ms": 2762.3408397000276,
+      "tpot_ms": 51.8613129730896,
+      "tokens_per_second": 11.706840399505845,
+      "p50_ms": 82.70883087499215,
+      "p95_ms": 90.68234725000934,
+      "p99_ms": 90.68234725000934,
+      "ram_mb": 1296.07421875
+    }
+  ]
+}

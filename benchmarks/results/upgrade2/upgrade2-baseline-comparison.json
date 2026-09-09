@@ -1,0 +1,170 @@
+{
+  "upgrade": 2,
+  "model": "Qwen2.5-0.5B-Instruct",
+  "hardware": "Intel i3-1115G4",
+  "precision": "fp16",
+  "workload": {
+    "batch": 1,
+    "context": 2048,
+    "generation_tokens": 32
+  },
+  "constraints": {
+    "p95_ms": 100,
+    "accuracy_loss_percent": 1.0,
+    "ram_mb": 6000
+  },
+  "results": {
+    "pytorch": {
+      "runtime": "pytorch",
+      "model": "Qwen2.5-0.5B-Instruct",
+      "precision": "fp16",
+      "batch": 1,
+      "context": 2048,
+      "generation_tokens": 32,
+      "hardware": "Intel i3-1115G4",
+      "timestamp": "2026-09-09T05:07:47.656543Z",
+      "software": {
+        "pytorch": "2.2.1+cpu",
+        "transformers": "4.40+"
+      },
+      "runs": [
+        {
+          "ttft_ms": 11601.661220499978,
+          "tpot_ms": 501.30274911612986,
+          "tokens_per_second": 1.1801432024371317,
+          "p50_ms": 499.2328000322569,
+          "p95_ms": 536.1764466774217,
+          "p99_ms": 536.1764466774217,
+          "ram_mb": 35.875,
+          "threads": 1
+        },
+        {
+          "ttft_ms": 11356.304354500026,
+          "tpot_ms": 543.1579342677387,
+          "tokens_per_second": 1.1358279530167223,
+          "p50_ms": 537.0499520322629,
+          "p95_ms": 589.9239258387165,
+          "p99_ms": 589.9239258387165,
+          "ram_mb": 26.0,
+          "threads": 2
+        },
+        {
+          "ttft_ms": 15714.467927699978,
+          "tpot_ms": 862.7490558483903,
+          "tokens_per_second": 0.8659238290017062,
+          "p50_ms": 676.3708914516047,
+          "p95_ms": 1721.2727495483878,
+          "p99_ms": 1721.2727495483878,
+          "ram_mb": 26.625,
+          "threads": 4
+        }
+      ]
+    },
+    "llamacpp": {
+      "runtime": "llamacpp",
+      "model": "Qwen2.5-0.5B-Instruct",
+      "precision": "fp16",
+      "batch": 1,
+      "context": 2048,
+      "generation_tokens": 32,
+      "hardware": "Intel i3-1115G4",
+      "timestamp": "2026-09-09T10:03:37.199358Z",
+      "software": {
+        "llama_cpp": "unknown"
+      },
+      "measurement_notes": {
+        "ttft_method": "separate_single_token_run_includes_model_load",
+        "tpot_method": "total_minus_separate_ttft_div_tokens_minus_1",
+        "tok_per_sec_method": "tokens_div_total_wall_time_includes_model_load",
+        "ram_method": "peak_rss_of_llama_cli_subprocess",
+        "caveat": "TTFT includes model load; TPOT uses separate-run TTFT; tok/s includes load time; RAM is subprocess peak RSS"
+      },
+      "runs": [
+        {
+          "threads": 1,
+          "ttft_ms": 2707.3042797998824,
+          "tpot_ms": 33.84775947047247,
+          "tokens_per_second": 11.872946083798455,
+          "p50_ms": 3.9967847096704645,
+          "p95_ms": 84.68830012500916,
+          "p99_ms": 84.68830012500916,
+          "ram_mb": 1296.02734375
+        },
+        {
+          "threads": 2,
+          "ttft_ms": 2676.0896949001108,
+          "tpot_ms": 18.555893568141222,
+          "tokens_per_second": 11.850099875248848,
+          "p50_ms": 2.84877135483487,
+          "p95_ms": 86.56944781250786,
+          "p99_ms": 86.56944781250786,
+          "ram_mb": 1296.06640625
+        },
+        {
+          "threads": 4,
+          "ttft_ms": 2762.3408397000276,
+          "tpot_ms": 51.8613129730896,
+          "tokens_per_second": 11.706840399505845,
+          "p50_ms": 82.70883087499215,
+          "p95_ms": 90.68234725000934,
+          "p99_ms": 90.68234725000934,
+          "ram_mb": 1296.07421875
+        }
+      ]
+    },
+    "edgecore": {
+      "runtime": "edgecore",
+      "model": "Qwen2.5-0.5B-Instruct",
+      "precision": "fp16",
+      "batch": 1,
+      "context": 2048,
+      "generation_tokens": 32,
+      "hardware": "Intel i3-1115G4",
+      "timestamp": "2026-09-09T04:24:49.177423Z",
+      "software": {
+        "edgecore": "v0.2"
+      },
+      "runs": [
+        {
+          "threads": 1,
+          "ttft_ms": 2670.264,
+          "tpot_ms": 101.6306,
+          "tokens_per_second": 5.4123,
+          "p50_ms": 101.453,
+          "p95_ms": 107.826,
+          "p99_ms": 107.826,
+          "ram_mb": 1361
+        },
+        {
+          "threads": 2,
+          "ttft_ms": 1708.2812000000001,
+          "tpot_ms": 73.0095,
+          "tokens_per_second": 8.065000000000001,
+          "p50_ms": 68.576,
+          "p95_ms": 101.471,
+          "p99_ms": 101.471,
+          "ram_mb": 1361
+        },
+        {
+          "threads": 4,
+          "ttft_ms": 1568.8209000000002,
+          "tpot_ms": 135.5537,
+          "tokens_per_second": 5.6770000000000005,
+          "p50_ms": 119.686,
+          "p95_ms": 247.633,
+          "p99_ms": 247.633,
+          "ram_mb": 1361
+        }
+      ]
+    }
+  },
+  "speedups": {
+    "edgecore_vs_pytorch_1T": 4.586138350687422,
+    "edgecore_vs_llamacpp_1T": 0.4558514762722201,
+    "edgecore_vs_pytorch_2T": 7.100547207505874,
+    "edgecore_vs_llamacpp_2T": 0.6805849811312784,
+    "edgecore_vs_pytorch_4T": 6.5560038999559795,
+    "edgecore_vs_llamacpp_4T": 0.48493016102274966
+  },
+  "timestamp": "2026-09-09T10:08:44.143932Z"
+}

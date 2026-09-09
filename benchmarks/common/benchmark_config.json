@@ -1,0 +1,10 @@
+{
+  "model": "Qwen2.5-0.5B-Instruct",
+  "batch": 1,
+  "context": 2048,
+  "generation_tokens": 32,
+  "threads": [1, 2, 4],
+  "repetitions": 10,
+  "precision": "fp16",
+  "warmup_runs": 2
+}

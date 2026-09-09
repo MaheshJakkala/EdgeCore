@@ -1,0 +1,7 @@
+{
+  "model": "Qwen2.5-0.5B-Instruct",
+  "system_prompt": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant.",
+  "user_prompt": "Explain what a CPU cache is in simple terms.",
+  "chat_template": "system\n{system_prompt}\nuser\n{user_prompt}\nassistant\n",
+  "formatted_prompt": "system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.\nuser\nExplain what a CPU cache is in simple terms.\nassistant\n"
+}
